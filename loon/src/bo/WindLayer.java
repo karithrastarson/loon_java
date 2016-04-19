@@ -7,6 +7,7 @@ import structures.Pair;
 
 public class WindLayer {
 
+	private static final int DEFAULT_SPEED = 15;
 
 	private Pair<Integer, Integer>[][] grid;
 	private int Id;
@@ -21,7 +22,9 @@ public class WindLayer {
 		
 		for(int i = 0; i<worldSize; i++){
 			for(int j = 0; j<worldSize; j++){
-				grid[i][j] = new Pair(1,1);
+				int x = DEFAULT_SPEED + (rand.nextInt(2 - (-2) + 1) + (-2));
+				int y = DEFAULT_SPEED + (rand.nextInt(2 - (-2) + 1) + (-2));				
+				grid[i][j] = new Pair(x,y);
 			}
 		}
 		}

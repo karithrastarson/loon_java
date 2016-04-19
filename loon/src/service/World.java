@@ -12,14 +12,24 @@ public class World {
 	/*
 	 * MODEL PARAMETERS
 	 * 
+	 * World size
+	 * Start number of balloons
+	 * Vertical speed is the speed of the balloon up or down between layers
+	 * Number of steps in the simulation
+	 * Number of currents in the system
+	 * Max altitude of a balloon
+	 * Min altitude of a balloon
+	 * 
 	 */
 	
 	public final int WORLD_SIZE = 250;
 	private final int START_NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
-	private final int DELAY_TIME = 2;
+	private final int VERTICAL_SPEED = 3;
 	private final int NUMBER_OF_STEPS = 1000;
 	private final int NUMBER_OF_CURRENTS = 3;
-
+	private final int MAX_ALTITUDE = 10;
+	private final int MIN_ALTITUDE = 0;
+	
 	/*
 	 * CONTAINERS USED BY THE MODEL
 	 */
@@ -100,15 +110,11 @@ public class World {
 		return toString();
 
 	}
-	private void moveBetweenLayers(Balloon balloon) {
-
-		//NextLayer becomes the current layer
-		//and delay is reset to 0
-		//and nextLayer is reset to null
+	private void moveBetweenLayers(Balloon balloon, WindLayer newLayer) {
 		
-		balloon.setWindLayer(balloon.getNextWindLayer());
-		balloon.setDelay(0);
-		balloon.setNextLayer(null);
+		balloon.setWindLayer(newLayer);
+		balloon.stopVertical();
+		
 	}
 
 	public void applyCurrents(){
@@ -123,7 +129,7 @@ public class World {
 		 *	to another layer
 		 */
 		for(Balloon b : balloons){
-			if(b.getDelay()==0){
+			if(!b.isMovingDown() && !b.isMovingUp()){
 				applyDecision1(b);
 			}
 		}
@@ -133,24 +139,26 @@ public class World {
 	private void applyDecision1(Balloon b) {
 		int x = b.getX();
 		int y = b.getY();
+		
+		//If more than one balloons occupy this space, then start moving up or down
 		if(grid[x][y]>1){
-			b.setDelay(DELAY_TIME);
+
 			int currentID = b.getWindLayer().getId();
-			//move to the next below if at the top. Else random
+			//Start moving down if at top. Else randomly up or down
 			if(currentID==NUMBER_OF_CURRENTS-1){
-				b.setNextLayer(stratosphere.get(currentID-1));
+				b.goDown();
 			}
 			else if(currentID==0){
-				b.setNextLayer(stratosphere.get(currentID+1));
+				b.goUp();
 			}
 			else{
 				Random rand = new Random();
 				boolean sign = rand.nextBoolean();
 				if(sign){
-					b.setNextLayer(stratosphere.get(currentID+1));
+					b.goUp();
 				}
 				else{
-					b.setNextLayer(stratosphere.get(currentID-1));
+					b.goDown();
 				}
 			}
 		}
@@ -169,12 +177,17 @@ public class World {
 		 * appropriate updates
 		 * */
 		
+		//update altitude
+		balloon.updateAltitude(VERTICAL_SPEED);
+		adjustAltitude(balloon);
+		
 		//Check if it is time to apply new wind layer
-		if(balloon.getDelay()==1){
-			moveBetweenLayers(balloon);
-		}
-		else{
-			balloon.decreaseDelay();
+		//We find the wind layer that should apply to a balloon in that altitude
+		WindLayer correctLayer = getLayerFromAltitude(balloon.getAltitude());
+		
+		if(!balloon.getWindLayer().equals(correctLayer)){
+			//the wind layers don't match so we update
+			moveBetweenLayers(balloon,correctLayer);
 		}
 		
 		//Get current coordinates
@@ -200,6 +213,35 @@ public class World {
 		//Update the grid
 		grid[newX][newY]++;
 
+	}
+
+	private WindLayer getLayerFromAltitude(int altitude) {
+		//THIS FUNCTION HAS TO BE IMPLEMENTED IN A NICER WAY
+		
+		if(altitude>=0 && altitude <3){return stratosphere.get(0);}
+		if(altitude>=3 && altitude <6){return stratosphere.get(1);}
+		if(altitude>=6 && altitude <9){return stratosphere.get(2);}
+		if(altitude>=9 && altitude <12){return stratosphere.get(3);}
+			
+		return null;
+	}
+
+	private void adjustAltitude(Balloon balloon) {
+		/*If a balloon moves below the MIN ALTITUDE
+		 * or above the MAX ALTITUDE then it is moved back to the 
+		 * boundaries and the vertical movement is stopped
+		 * 
+		 */ 
+		
+		if(balloon.getAltitude()<MIN_ALTITUDE){
+			balloon.setAltitude(MIN_ALTITUDE);
+			balloon.stopVertical();
+		}
+		if(balloon.getAltitude()>MAX_ALTITUDE){
+			balloon.setAltitude(MAX_ALTITUDE);
+			balloon.stopVertical();
+		}
+		
 	}
 
 	//Method used to adjust the position of the balloon when it travels out of bounds
