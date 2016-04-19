@@ -41,7 +41,7 @@ public class MainWindow {
 	private static void createAndShowGUI() {
 		System.out.println("Created GUI on EDT? "+
 				SwingUtilities.isEventDispatchThread());
-		JFrame f = new JFrame("Swing Paint Demo");
+		JFrame f = new JFrame("Simulator");
 		world = new World();
 		world.init();
 
