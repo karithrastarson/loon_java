@@ -12,7 +12,7 @@ public class WindLayer {
 	private Pair<Integer, Integer>[][] grid;
 	private int Id;
 	
-	public WindLayer(String filename, int worldSize, int id){
+	public WindLayer(int worldSize, int id){
 		Random rand = new Random();
 		Id = id;
 		grid = new Pair[worldSize][worldSize];

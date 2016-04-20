@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -33,12 +35,20 @@ public class MainWindow {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				createAndShowGUI();
+				try {
+					createAndShowGUI();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
 
-	private static void createAndShowGUI() {
+	private static void createAndShowGUI() throws FileNotFoundException, IOException {
 		System.out.println("Created GUI on EDT? "+
 				SwingUtilities.isEventDispatchThread());
 		JFrame f = new JFrame("Simulator");
@@ -52,7 +62,7 @@ public class MainWindow {
 		canvas.setPreferredSize(new Dimension(world.WORLD_SIZE, world.WORLD_SIZE));
 
 		JButton btnStep = new JButton("Step");
-		JButton btnStep10 = new JButton("Step 10");
+		JButton btnStep10 = new JButton("Step 100");
 		JButton btnAuto = new JButton("Auto");
 		JButton btnStop = new JButton("Stop");
 		JButton btnReset = new JButton("Reset");
@@ -80,10 +90,11 @@ public class MainWindow {
 		btnStep10.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i = 0; i<10; i++){
+				for(int i = 0; i<100; i++){
 					updateCanvas();
-					f.repaint();
+					
 				}
+				f.repaint();
 			}
 		});
 

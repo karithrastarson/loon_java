@@ -1,11 +1,17 @@
 package service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import bo.Balloon;
 import bo.WindLayer;
+import structures.Pair;
 
 public class World {
 
@@ -22,12 +28,12 @@ public class World {
 	 * 
 	 */
 	
-	public final int WORLD_SIZE = 250;
+	public final int WORLD_SIZE = 25;
 	private final int START_NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
-	private final int VERTICAL_SPEED = 3;
-	private final int NUMBER_OF_STEPS = 1000;
+	private final int VERTICAL_SPEED = 2;
+	private final int NUMBER_OF_STEPS = 10;
 	private final int NUMBER_OF_CURRENTS = 3;
-	private final int MAX_ALTITUDE = 10;
+	private final int MAX_ALTITUDE = 12;
 	private final int MIN_ALTITUDE = 0;
 	
 	/*
@@ -65,7 +71,7 @@ public class World {
 		grid = new int[WORLD_SIZE][WORLD_SIZE];
 	}
 
-	public void init(){
+	public void init() throws FileNotFoundException, IOException{
 		//initialize statistical variables
 		accumulatedCoverage = 0;
 		droppedConnections = 0;
@@ -73,13 +79,19 @@ public class World {
 		notConnected = 0;
 
 		//add wind layers
-		WindLayer w1 = new WindLayer("",WORLD_SIZE, 0);
-		WindLayer w2 = new WindLayer("",WORLD_SIZE, 1);
-		WindLayer w3 = new WindLayer("",WORLD_SIZE, 2);
+		WindLayer w1 = new WindLayer(WORLD_SIZE, 0);
+		WindLayer w2 = new WindLayer(WORLD_SIZE, 1);
+		WindLayer w3 = new WindLayer(WORLD_SIZE, 2);
+		WindLayer w4 = new WindLayer(WORLD_SIZE, 3);
 
 		stratosphere.add(w1);
 		stratosphere.add(w2);
 		stratosphere.add(w3);
+		stratosphere.add(w4);
+
+		writeWindLayersToFile();
+		
+
 
 		/*
 		 * Initialize the earth grid:
@@ -90,6 +102,7 @@ public class World {
 		for(int i = 0; i < WORLD_SIZE; i++){
 			for(int j = 0; j < WORLD_SIZE; j++){
 				grid[i][j] = 0;
+				notConnected++;
 			}
 		}
 
@@ -103,6 +116,8 @@ public class World {
 			createBalloon();
 		}
 	}
+
+	
 	public String step(){
 		applyDecision();		
 		applyCurrents();
@@ -265,31 +280,27 @@ public class World {
 	}
 
 	private void updateStatistics() {
-		accumulatedCoverage = accumulatedCoverage+(notConnected/WORLD_SIZE);
+		accumulatedCoverage += (notConnected/WORLD_SIZE);
 
 	}
 
 	@Override
 	public String toString() {
 
-		StringBuilder ret = new StringBuilder("Status of the world:\n");
-		ret.append("Number of balloons: "+balloons.size()+"\n");
-		ret.append("Position of balloons:\n");
 
-			for(int i = 0; i<WORLD_SIZE; i++){
-				for(int j = 0; j<WORLD_SIZE;j++){
-
-					ret.append(grid[i][j]);
-					ret.append("*");
-				}
-				ret.append('\n');
-			}
-		return ret.toString();
+		return printStats();
 	}
 
 	public String printStats() {
 
+		//TODO: Implement stream to file, to create graphs
+		
 		StringBuilder stats = new StringBuilder("Statistics for run.\n\n");
+		stats.append("Number of steps:" + NUMBER_OF_STEPS+"\n");
+		stats.append("World size: " + WORLD_SIZE + "\n");
+		stats.append("Number of balloons: " + START_NUMBER_OF_BALLOONS + "\n");
+		stats.append("Number of wind layers " + stratosphere.size() + "\n");
+		
 		stats.append("Coverage over simulation: "+(accumulatedCoverage/NUMBER_OF_STEPS)+"\n");
 		stats.append("Dropped conncetions: "+droppedConnections+"\n");
 		return stats.toString();
@@ -304,12 +315,56 @@ public class World {
 		}
 		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
 	}
+	
 
 	public ArrayList<Balloon> getBalloons() {
 		return balloons;
 	}
 
+	private void writeWindLayersToFile() {
+		//Write the layers to a file for vizualization
+		int count = 1;
+		for(WindLayer windlayer : stratosphere){
+			File fileX = new File("windlayer"+count+"_X.txt");
+			File fileY = new File("windlayer"+count+"_Y.txt");
+			
+			try{
 
+				//FileOutputStream outx = new FileOutputStream(fileX);
+				//FileOutputStream outy = new FileOutputStream(fileY);
+				
+			    BufferedWriter outx = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileX)));
+			    BufferedWriter outy = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileY)));
+				for(int x = 0; x < WORLD_SIZE; x++){
+					for(int y = 0; y < WORLD_SIZE; y++){
+						
+						
+						
+						//byte[] writeX = windlayer.getWind(x, y).getFirst().toString().getBytes();
+					//	byte[] writeY = windlayer.getWind(x, y).getSecond().toString().getBytes();
+						
+						
+						outx.write(windlayer.getWind(x, y).getFirst().toString());
+						outy.write(windlayer.getWind(x, y).getSecond().toString());
+						
+						outx.write("\t");
+						outy.write("\t");
+						
+					}
+				
+					outx.newLine();
+					outy.newLine();
+	
+				}
+				outx.close();
+				outy.close();
+				count++;	
+			}catch(Exception e){}
+
+		}
+	}
+	
+	
 
 
 }
