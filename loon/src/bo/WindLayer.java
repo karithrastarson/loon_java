@@ -8,6 +8,8 @@ import structures.Pair;
 public class WindLayer {
 
 	private static final int DEFAULT_SPEED = 15;
+	private static final int NOISE = 4;
+	
 
 	private Pair<Integer, Integer>[][] grid;
 	private int Id;
@@ -22,9 +24,27 @@ public class WindLayer {
 		
 		for(int i = 0; i<worldSize; i++){
 			for(int j = 0; j<worldSize; j++){
-				int x = DEFAULT_SPEED + (rand.nextInt(2 - (-2) + 1) + (-2));
-				int y = DEFAULT_SPEED + (rand.nextInt(2 - (-2) + 1) + (-2));				
-				grid[i][j] = new Pair(x,y);
+				
+				int randomDeviation = 0 + (int)(Math.random() * NOISE);
+				int x,y;
+				
+				if(rand.nextBoolean()){
+					 x = DEFAULT_SPEED + randomDeviation;
+				}
+				else{
+					 x = DEFAULT_SPEED -randomDeviation;                         
+				}
+	
+					randomDeviation = 0 + (int)(Math.random() * NOISE);
+				
+				if(rand.nextBoolean()){
+					 y = DEFAULT_SPEED + randomDeviation;
+				}
+				else{
+					 y = DEFAULT_SPEED -randomDeviation;                         
+				}
+					
+				grid[i][j] = new Pair<Integer, Integer>(x,y);
 			}
 		}
 		}

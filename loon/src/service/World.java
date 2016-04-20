@@ -28,10 +28,10 @@ public class World {
 	 * 
 	 */
 	
-	public final int WORLD_SIZE = 25;
+	public final int WORLD_SIZE = 250;
 	private final int START_NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
 	private final int VERTICAL_SPEED = 2;
-	private final int NUMBER_OF_STEPS = 10;
+	private final int NUMBER_OF_STEPS = 100;
 	private final int NUMBER_OF_CURRENTS = 3;
 	private final int MAX_ALTITUDE = 12;
 	private final int MIN_ALTITUDE = 0;
