@@ -1,25 +1,41 @@
 package service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import bo.Balloon;
 import bo.WindLayer;
+import structures.Pair;
 
 public class World {
 
 	/*
 	 * MODEL PARAMETERS
 	 * 
+	 * World size
+	 * Start number of balloons
+	 * Vertical speed is the speed of the balloon up or down between layers
+	 * Number of steps in the simulation
+	 * Number of currents in the system
+	 * Max altitude of a balloon
+	 * Min altitude of a balloon
+	 * 
 	 */
 	
-	public final int WORLD_SIZE = 250;
+	public final int WORLD_SIZE = 205;
 	private final int START_NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
-	private final int DELAY_TIME = 2;
+	private final int VERTICAL_SPEED = 2;
 	private final int NUMBER_OF_STEPS = 1000;
 	private final int NUMBER_OF_CURRENTS = 3;
-
+	private final int MAX_ALTITUDE = 12;
+	private final int MIN_ALTITUDE = 0;
+	
 	/*
 	 * CONTAINERS USED BY THE MODEL
 	 */
@@ -27,6 +43,11 @@ public class World {
 	private ArrayList<Balloon> balloons;
 	private int[][] grid;
 
+
+	
+	//Various variables
+	private int currentStep;
+	private static BufferedWriter coverageWriter;
 	/*
 	 * STATISTICAL VARIABLES USED FOR MEASUREMENT
 	 */
@@ -55,21 +76,31 @@ public class World {
 		grid = new int[WORLD_SIZE][WORLD_SIZE];
 	}
 
-	public void init(){
+	public void init() throws FileNotFoundException, IOException{
 		//initialize statistical variables
 		accumulatedCoverage = 0;
 		droppedConnections = 0;
 		simulationCoverage = 0;
 		notConnected = 0;
+		currentStep = 0;
 
 		//add wind layers
-		WindLayer w1 = new WindLayer("",WORLD_SIZE, 0);
-		WindLayer w2 = new WindLayer("",WORLD_SIZE, 1);
-		WindLayer w3 = new WindLayer("",WORLD_SIZE, 2);
+		WindLayer w1 = new WindLayer(WORLD_SIZE, 0);
+		WindLayer w2 = new WindLayer(WORLD_SIZE, 1);
+		WindLayer w3 = new WindLayer(WORLD_SIZE, 2);
+		WindLayer w4 = new WindLayer(WORLD_SIZE, 3);
 
 		stratosphere.add(w1);
 		stratosphere.add(w2);
 		stratosphere.add(w3);
+		stratosphere.add(w4);
+
+		writeWindLayersToFile();
+		
+		
+		//initialize output stream
+		File coverageFile = new File("simuluation_coverage.txt");
+		coverageWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(coverageFile)));
 
 		/*
 		 * Initialize the earth grid:
@@ -80,6 +111,7 @@ public class World {
 		for(int i = 0; i < WORLD_SIZE; i++){
 			for(int j = 0; j < WORLD_SIZE; j++){
 				grid[i][j] = 0;
+				notConnected++;
 			}
 		}
 
@@ -93,22 +125,24 @@ public class World {
 			createBalloon();
 		}
 	}
+
+	
 	public String step(){
+		currentStep++;
 		applyDecision();		
 		applyCurrents();
 		updateStatistics();
+		double currentCoverage = notConnected/(WORLD_SIZE*WORLD_SIZE);
+		
+		System.out.println(notConnected);
 		return toString();
 
 	}
-	private void moveBetweenLayers(Balloon balloon) {
-
-		//NextLayer becomes the current layer
-		//and delay is reset to 0
-		//and nextLayer is reset to null
+	private void moveBetweenLayers(Balloon balloon, WindLayer newLayer) {
 		
-		balloon.setWindLayer(balloon.getNextWindLayer());
-		balloon.setDelay(0);
-		balloon.setNextLayer(null);
+		balloon.setWindLayer(newLayer);
+		balloon.stopVertical();
+		
 	}
 
 	public void applyCurrents(){
@@ -123,7 +157,7 @@ public class World {
 		 *	to another layer
 		 */
 		for(Balloon b : balloons){
-			if(b.getDelay()==0){
+			if(!b.isMovingDown() && !b.isMovingUp()){
 				applyDecision1(b);
 			}
 		}
@@ -133,24 +167,26 @@ public class World {
 	private void applyDecision1(Balloon b) {
 		int x = b.getX();
 		int y = b.getY();
+		
+		//If more than one balloons occupy this space, then start moving up or down
 		if(grid[x][y]>1){
-			b.setDelay(DELAY_TIME);
+
 			int currentID = b.getWindLayer().getId();
-			//move to the next below if at the top. Else random
+			//Start moving down if at top. Else randomly up or down
 			if(currentID==NUMBER_OF_CURRENTS-1){
-				b.setNextLayer(stratosphere.get(currentID-1));
+				b.goDown();
 			}
 			else if(currentID==0){
-				b.setNextLayer(stratosphere.get(currentID+1));
+				b.goUp();
 			}
 			else{
 				Random rand = new Random();
 				boolean sign = rand.nextBoolean();
 				if(sign){
-					b.setNextLayer(stratosphere.get(currentID+1));
+					b.goUp();
 				}
 				else{
-					b.setNextLayer(stratosphere.get(currentID-1));
+					b.goDown();
 				}
 			}
 		}
@@ -169,12 +205,17 @@ public class World {
 		 * appropriate updates
 		 * */
 		
+		//update altitude
+		balloon.updateAltitude(VERTICAL_SPEED);
+		adjustAltitude(balloon);
+		
 		//Check if it is time to apply new wind layer
-		if(balloon.getDelay()==1){
-			moveBetweenLayers(balloon);
-		}
-		else{
-			balloon.decreaseDelay();
+		//We find the wind layer that should apply to a balloon in that altitude
+		WindLayer correctLayer = getLayerFromAltitude(balloon.getAltitude());
+		
+		if(!balloon.getWindLayer().equals(correctLayer)){
+			//the wind layers don't match so we update
+			moveBetweenLayers(balloon,correctLayer);
 		}
 		
 		//Get current coordinates
@@ -202,6 +243,35 @@ public class World {
 
 	}
 
+	private WindLayer getLayerFromAltitude(int altitude) {
+		//THIS FUNCTION HAS TO BE IMPLEMENTED IN A NICER WAY
+		
+		if(altitude>=0 && altitude <3){return stratosphere.get(0);}
+		if(altitude>=3 && altitude <6){return stratosphere.get(1);}
+		if(altitude>=6 && altitude <9){return stratosphere.get(2);}
+		if(altitude>=9 && altitude <12){return stratosphere.get(3);}
+			
+		return null;
+	}
+
+	private void adjustAltitude(Balloon balloon) {
+		/*If a balloon moves below the MIN ALTITUDE
+		 * or above the MAX ALTITUDE then it is moved back to the 
+		 * boundaries and the vertical movement is stopped
+		 * 
+		 */ 
+		
+		if(balloon.getAltitude()<MIN_ALTITUDE){
+			balloon.setAltitude(MIN_ALTITUDE);
+			balloon.stopVertical();
+		}
+		if(balloon.getAltitude()>MAX_ALTITUDE){
+			balloon.setAltitude(MAX_ALTITUDE);
+			balloon.stopVertical();
+		}
+		
+	}
+
 	//Method used to adjust the position of the balloon when it travels out of bounds
 	private void adjustPosition(Balloon balloon) {
 		int x = balloon.getX();
@@ -223,31 +293,39 @@ public class World {
 	}
 
 	private void updateStatistics() {
-		accumulatedCoverage = accumulatedCoverage+(notConnected/WORLD_SIZE);
+		accumulatedCoverage += (notConnected/(WORLD_SIZE*WORLD_SIZE));
+		
+		//Initialize the file to write coverage data
+		
+		
+			
+			try {
+
+				coverageWriter.write("Y");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		
 
 	}
 
 	@Override
 	public String toString() {
 
-		StringBuilder ret = new StringBuilder("Status of the world:\n");
-		ret.append("Number of balloons: "+balloons.size()+"\n");
-		ret.append("Position of balloons:\n");
 
-			for(int i = 0; i<WORLD_SIZE; i++){
-				for(int j = 0; j<WORLD_SIZE;j++){
-
-					ret.append(grid[i][j]);
-					ret.append("*");
-				}
-				ret.append('\n');
-			}
-		return ret.toString();
+		return printStats();
 	}
 
 	public String printStats() {
-
+		
 		StringBuilder stats = new StringBuilder("Statistics for run.\n\n");
+		stats.append("Number of steps:" + NUMBER_OF_STEPS+"\n");
+		stats.append("World size: " + WORLD_SIZE + "\n");
+		stats.append("Number of balloons: " + START_NUMBER_OF_BALLOONS + "\n");
+		stats.append("Number of wind layers " + stratosphere.size() + "\n");
+		
 		stats.append("Coverage over simulation: "+(accumulatedCoverage/NUMBER_OF_STEPS)+"\n");
 		stats.append("Dropped conncetions: "+droppedConnections+"\n");
 		return stats.toString();
@@ -262,12 +340,56 @@ public class World {
 		}
 		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
 	}
+	
 
 	public ArrayList<Balloon> getBalloons() {
 		return balloons;
 	}
 
+	private void writeWindLayersToFile() {
+		//Write the layers to a file for vizualization
+		int count = 1;
+		for(WindLayer windlayer : stratosphere){
+			File fileX = new File("windlayer"+count+"_X.txt");
+			File fileY = new File("windlayer"+count+"_Y.txt");
+			
+			try{
 
+				//FileOutputStream outx = new FileOutputStream(fileX);
+				//FileOutputStream outy = new FileOutputStream(fileY);
+				
+			    BufferedWriter outx = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileX)));
+			    BufferedWriter outy = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileY)));
+				for(int x = 0; x < WORLD_SIZE; x++){
+					for(int y = 0; y < WORLD_SIZE; y++){
+						
+						
+						
+						//byte[] writeX = windlayer.getWind(x, y).getFirst().toString().getBytes();
+					//	byte[] writeY = windlayer.getWind(x, y).getSecond().toString().getBytes();
+						
+						
+						outx.write(windlayer.getWind(x, y).getFirst().toString());
+						outy.write(windlayer.getWind(x, y).getSecond().toString());
+						
+						outx.write("\t");
+						outy.write("\t");
+						
+					}
+				
+					outx.newLine();
+					outy.newLine();
+	
+				}
+				outx.close();
+				outy.close();
+				count++;	
+			}catch(Exception e){}
+
+		}
+	}
+	
+	
 
 
 }

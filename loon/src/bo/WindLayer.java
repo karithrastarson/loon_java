@@ -7,33 +7,45 @@ import structures.Pair;
 
 public class WindLayer {
 
+	private static final int DEFAULT_SPEED = 15;
+	private static final int NOISE = 4;
+	
 
 	private Pair<Integer, Integer>[][] grid;
 	private int Id;
 	
-	public WindLayer(String filename, int worldSize, int id){
+	public WindLayer(int worldSize, int id){
 		Random rand = new Random();
 		Id = id;
 		grid = new Pair[worldSize][worldSize];
 		//TMP DATA
 		
-		if(rand.nextBoolean()){
-		
+	
 		for(int i = 0; i<worldSize; i++){
 			for(int j = 0; j<worldSize; j++){
-				grid[i][j] = new Pair(1,1);
-			}
-		}
-		}
-		else{
-			for(int i = 0; i<worldSize; i++){
-				for(int j = 0; j<worldSize; j++){
-					grid[i][j] = new Pair(-1,-1);
+				
+				int randomDeviation = 0 + (int)(Math.random() * NOISE);
+				int x,y;
+				
+				if(rand.nextBoolean()){
+					 x = DEFAULT_SPEED + randomDeviation;
 				}
+				else{
+					 x = DEFAULT_SPEED -randomDeviation;                         
+				}
+	
+					randomDeviation = 0 + (int)(Math.random() * NOISE);
+				
+				if(rand.nextBoolean()){
+					 y = DEFAULT_SPEED + randomDeviation;
+				}
+				else{
+					 y = DEFAULT_SPEED -randomDeviation;                         
+				}
+					
+				grid[i][j] = new Pair<Integer, Integer>(x,y);
 			}
 		}
-
-		//TODO read from file
 
 	}
 	public Pair<Integer,Integer> getWind(int x, int y){

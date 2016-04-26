@@ -6,12 +6,15 @@ public class Balloon {
 	//Coordinates of the balloon
 	int x;
 	int y;
+	int altitude;
+	
+	boolean isMovingUp = false;
+	boolean isMovingDown = false;
+	
+	
 	//the layer that the balloon is in
 	WindLayer windLayer;
-	//the time it takes to travel between layers
-	int delay;
-	//when delay is not 0, then the balloon is on its way to the nextLayer
-	WindLayer nextLayer;
+
 	
 	public Balloon(){
 		x = 0;
@@ -21,8 +24,6 @@ public class Balloon {
 		x = _x;
 		y = _y;
 		windLayer = wl;
-		delay = 0;
-		nextLayer = null;
 	}
 	
 	public void moveWithWind(){
@@ -49,23 +50,49 @@ public class Balloon {
 	public WindLayer getWindLayer() {
 		return windLayer;
 	}
-	public WindLayer getNextWindLayer(){
-		return nextLayer;
-	}
+
 	public void setWindLayer(WindLayer newLayer) {
 		windLayer = newLayer;
 	}
-	public int getDelay(){
-		return delay;
-	}
-	public void setDelay(int d){
-		delay = d;
-	}
 
+
+	public int getAltitude() {
+		return altitude;
+	}
+	public void setAltitude(int altitude) {
+		this.altitude = altitude;
+	}
+	public boolean isMovingUp() {
+		return isMovingUp;
+	}
+	public void goUp() {
+		this.isMovingUp = true;
+		this.isMovingDown = false;
+	}
+	public boolean isMovingDown() {
+		return isMovingDown;
+	}
+	public void goDown() {
+		this.isMovingDown = true;
+		this.isMovingUp = false;
+	}
+	public void stopVertical(){
+		this.isMovingDown = false;
+		this.isMovingUp = false;
+	}
+	
+	public void updateAltitude(int alt){
+		if(this.isMovingDown){
+			this.altitude-=alt;
+		}
+		else if(this.isMovingUp){
+			this.altitude+=alt;
+		}
+	}
 	@Override
 	public String toString() {
-		return "Balloon [x=" + x + ", y=" + y + ", windLayer=" + windLayer + ", delay=" + delay + ", nextLayer="
-				+ nextLayer + "]";
+		return "Balloon [x=" + x + ", y=" + y + ", altitude=" + altitude + ", isMovingUp=" + isMovingUp
+				+ ", isMovingDown=" + isMovingDown + ", windLayer=" + windLayer + "]";
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -87,12 +114,7 @@ public class Balloon {
 			return false;
 		return true;
 	}
-	public void setNextLayer(WindLayer windLayer2) {
-		nextLayer = windLayer2;
-	}
-	public void decreaseDelay() {
-		delay--;
-		
-	}
+
+
 	
 }

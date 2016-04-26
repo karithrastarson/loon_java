@@ -46,6 +46,12 @@ public class Pair<F, S> {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		
+		return first + "," + second;
+	}
     
     
 }
