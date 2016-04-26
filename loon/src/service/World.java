@@ -28,10 +28,10 @@ public class World {
 	 * 
 	 */
 	
-	public final int WORLD_SIZE = 250;
+	public final int WORLD_SIZE = 205;
 	private final int START_NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
 	private final int VERTICAL_SPEED = 2;
-	private final int NUMBER_OF_STEPS = 100;
+	private final int NUMBER_OF_STEPS = 1000;
 	private final int NUMBER_OF_CURRENTS = 3;
 	private final int MAX_ALTITUDE = 12;
 	private final int MIN_ALTITUDE = 0;
@@ -43,6 +43,11 @@ public class World {
 	private ArrayList<Balloon> balloons;
 	private int[][] grid;
 
+
+	
+	//Various variables
+	private int currentStep;
+	private static BufferedWriter coverageWriter;
 	/*
 	 * STATISTICAL VARIABLES USED FOR MEASUREMENT
 	 */
@@ -77,6 +82,7 @@ public class World {
 		droppedConnections = 0;
 		simulationCoverage = 0;
 		notConnected = 0;
+		currentStep = 0;
 
 		//add wind layers
 		WindLayer w1 = new WindLayer(WORLD_SIZE, 0);
@@ -91,7 +97,10 @@ public class World {
 
 		writeWindLayersToFile();
 		
-
+		
+		//initialize output stream
+		File coverageFile = new File("simuluation_coverage.txt");
+		coverageWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(coverageFile)));
 
 		/*
 		 * Initialize the earth grid:
@@ -119,9 +128,13 @@ public class World {
 
 	
 	public String step(){
+		currentStep++;
 		applyDecision();		
 		applyCurrents();
 		updateStatistics();
+		double currentCoverage = notConnected/(WORLD_SIZE*WORLD_SIZE);
+		
+		System.out.println(notConnected);
 		return toString();
 
 	}
@@ -280,7 +293,21 @@ public class World {
 	}
 
 	private void updateStatistics() {
-		accumulatedCoverage += (notConnected/WORLD_SIZE);
+		accumulatedCoverage += (notConnected/(WORLD_SIZE*WORLD_SIZE));
+		
+		//Initialize the file to write coverage data
+		
+		
+			
+			try {
+
+				coverageWriter.write("Y");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		
 
 	}
 
@@ -292,8 +319,6 @@ public class World {
 	}
 
 	public String printStats() {
-
-		//TODO: Implement stream to file, to create graphs
 		
 		StringBuilder stats = new StringBuilder("Statistics for run.\n\n");
 		stats.append("Number of steps:" + NUMBER_OF_STEPS+"\n");

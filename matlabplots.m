@@ -12,7 +12,7 @@ Y3 = importdata('loon/windlayer3_Y.txt')
 X4 = importdata('loon/windlayer4_X.txt')
 Y4 = importdata('loon/windlayer4_Y.txt')
 
-
+coverage = importdata('loon/simulation_coverage2')
 figure
 subplot(2,2,1)
 quiver(X1,Y1)
@@ -30,7 +30,7 @@ xlim([1 25])
 ylim([1 25])
 title('Windlayer 3')
 subplot(2,2,4)
-quiver(X4,Y4)
+quiver(X4,Y4)s
 xlim([1 25])
 ylim([1 25])
 title('Windlayer 4')

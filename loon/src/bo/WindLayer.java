@@ -20,8 +20,7 @@ public class WindLayer {
 		grid = new Pair[worldSize][worldSize];
 		//TMP DATA
 		
-		if(rand.nextBoolean()){
-		
+	
 		for(int i = 0; i<worldSize; i++){
 			for(int j = 0; j<worldSize; j++){
 				
@@ -47,16 +46,6 @@ public class WindLayer {
 				grid[i][j] = new Pair<Integer, Integer>(x,y);
 			}
 		}
-		}
-		else{
-			for(int i = 0; i<worldSize; i++){
-				for(int j = 0; j<worldSize; j++){
-					grid[i][j] = new Pair(-1,-1);
-				}
-			}
-		}
-
-		//TODO read from file
 
 	}
 	public Pair<Integer,Integer> getWind(int x, int y){

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import bo.Balloon;
 
@@ -28,6 +30,7 @@ public class MainWindow {
 	private JFrame mainFrame;
 	private static World world;
 	private static Canvas canvas;
+	private static int steps = 1;
 	public MainWindow(){
 
 	}
@@ -62,17 +65,18 @@ public class MainWindow {
 		canvas.setPreferredSize(new Dimension(world.WORLD_SIZE, world.WORLD_SIZE));
 
 		JButton btnStep = new JButton("Step");
-		JButton btnStep10 = new JButton("Step 100");
-		JButton btnAuto = new JButton("Auto");
-		JButton btnStop = new JButton("Stop");
-		JButton btnReset = new JButton("Reset");
+		JButton btnMultiStep = new JButton("Multi-Step");
+		
+		JSlider sliderNumSteps = new JSlider(1,100,1);
+		
+       
+       
 
 		JPanel buttons = new JPanel();
 		buttons.add(btnStep);
-		buttons.add(btnStep10);
-		buttons.add(btnAuto);
-		buttons.add(btnStop);
-		buttons.add(btnReset);
+		buttons.add(btnMultiStep);
+		buttons.add(sliderNumSteps);
+
 
 		f.add(canvas, BorderLayout.CENTER);
 		f.add(buttons,BorderLayout.PAGE_START);
@@ -80,17 +84,30 @@ public class MainWindow {
 		f.setResizable(false);
 		//Add action listeners
 
+		sliderNumSteps.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event) {
+                
+                steps = sliderNumSteps.getValue();
+                
+            
+            }
+        });
+		
 		btnStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				updateCanvas();
 				f.repaint();
 			}
 		});
-		btnStep10.addActionListener(new ActionListener() {
+
+		
+		btnMultiStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i = 0; i<100; i++){
+				for(int i = 0; i<steps; i++){
 					updateCanvas();
 					
 				}
@@ -105,7 +122,6 @@ public class MainWindow {
 	private static void updateCanvas(){
 		world.step();
 		canvas.updateGraphics(world.getBalloons());
-
 	}
 
 
