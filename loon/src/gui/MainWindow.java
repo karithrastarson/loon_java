@@ -98,7 +98,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				updateCanvas();
+				try {
+					updateCanvas();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				f.repaint();
 			}
 		});
@@ -108,7 +113,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i = 0; i<steps; i++){
-					updateCanvas();
+					try {
+						updateCanvas();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 				f.repaint();
@@ -119,7 +129,7 @@ public class MainWindow {
 		f.setVisible(true);
 	}
 
-	private static void updateCanvas(){
+	private static void updateCanvas() throws IOException{
 		world.step();
 		canvas.updateGraphics(world.getBalloons());
 	}

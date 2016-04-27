@@ -34,7 +34,7 @@ quiver(X4,Y4)
 xlim([1 25])
 ylim([1 25])
 title('Windlayer 4')
-print('report/graphics/WindLayers','-dpdf')
+print('WindLayers','-dpdf')
 
 sim_cov_alg1 = importdata('loon/sim_cov_alg1.txt');
 figure
@@ -46,10 +46,10 @@ xlim([0 1000])
 ylim([0 1])
 
 %
-%fid = fopen('loon/simuluation_coverage.txt','rt');
-%a = fscanf(fid, '%e');
-%close(fid);
+fid = fopen('loon/simulati.txt','rt');
+a = fscanf(fid,'%e')
+fclose(fid);
 
-%format short e
-%a
-%format 
+format short e
+a
+format 
