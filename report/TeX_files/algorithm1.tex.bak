@@ -1,0 +1,20 @@
+The first algorithm is straightforward and rudimentary. After all the balloons are deployed on the starting point the following logic helps the balloons determine whether it should move or not:
+
+\begin{algorithm}[H]
+  \If{More than 1 balloon at current space AND balloon is not moving}{
+ 	\If{At bottom layer} 
+ 	{Go up}
+ 	\ElseIf{At top layer}  	
+ 	{Go Down}
+ 	\Else  	
+ 	{Choose direction at random}
+ }
+ \Else
+ {Stay in current layer}
+ \caption{Control Algorithm 1}
+ \label{alg1}
+\end{algorithm}
+
+This algorithm has an obvious downside since as it contains an element of random, which is usually not helpful in a control algorithm. Nevertheless, it spreads the balloons pretty thoroughly around the grid relatively fast. The control over the grid is however limited, and this would not be a suitable solution if the end goal is to provide stable coverage.
+
+This algorithm might however be utilized as a part of a larger more complex algorithm. At the beginner stages of the balloon's life cycle it could prove helpful to get the balloon out of that first wind layer and join the huddle.  

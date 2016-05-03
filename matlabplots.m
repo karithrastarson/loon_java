@@ -36,20 +36,34 @@ ylim([1 25])
 title('Windlayer 4')
 print('report/graphics/WindLayers','-dpdf')
 
-sim_cov_alg1 = importdata('loon/sim_cov_alg1.txt');
+sim_cov_alg1 = importdata('loon/simulation_coverage_alg1_noEdges.txt');
+sim_cov_alg2 = importdata('loon/simulation_coverage_alg2_noEdges.txt');
+sim_cov_alg3_no_delay = importdata('loon/simulation_coverage_alg3_noDelay.txt');
+
+
 figure
+subplot(2,1,1)
+hold on
 plot(sim_cov_alg1(:,1), sim_cov_alg1(:,2))
-title('Algorithm 1 - Coverage')
+hline = refline([0 0.6]);
+hline.Color = 'r';
+title('Algorithm 1')
 xlabel('t')
 ylabel('Coverage')
-xlim([0 1000])
+xlim([0 10000])
 ylim([0 1])
-
+subplot(2,1,2)
+hold on
+plot(sim_cov_alg2(:,1), sim_cov_alg2(:,2))
+hline = refline([0 0.6]);
+hline.Color = 'r';
+title('Algorithm 2')
+xlabel('t')
+ylabel('Coverage')
+xlim([0 10000])
+ylim([0 1])
+%print('report/graphics/coverage_alg1_vs_alg2','-dpdf')
 %
-%fid = fopen('loon/simuluation_coverage.txt','rt');
-%a = fscanf(fid, '%e');
-%close(fid);
 
-%format short e
-%a
-%format 
+figure
+plot(sim_cov_alg3_no_delay(:,1),sim_cov_alg3_no_delay(:,2))

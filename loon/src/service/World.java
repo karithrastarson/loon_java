@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.DecimalFormat;
 
 import bo.Balloon;
 import bo.WindLayer;
@@ -28,8 +29,10 @@ public class World {
 	 * 
 	 */
 
-	public final int WORLD_SIZE = 205;
-	private final int NUMBER_OF_BALLOONS = WORLD_SIZE*WORLD_SIZE;
+	public final int WORLD_SIZE = 250;
+	private final int RANGE = 5;
+	private final double EXTRA_BALLOONS = 1.5;
+	private final int NUMBER_OF_BALLOONS = (int) ((int) WORLD_SIZE*WORLD_SIZE*EXTRA_BALLOONS);
 	private final int VERTICAL_SPEED = 3;
 	private final int NUMBER_OF_STEPS = 1000;
 	private final int NUMBER_OF_CURRENTS = 4;
@@ -37,7 +40,7 @@ public class World {
 	private final int MIN_ALTITUDE = 0;
 	private final int TOTAL_CELLS = WORLD_SIZE*WORLD_SIZE;
 	private FileOutputStream fos;
-
+	private final String SIMULATION_COVERAGE_FILE = "simulation_coverage_alg1_noDelay.txt";
 	/*
 	 * CONTAINERS USED BY THE MODEL
 	 */
@@ -68,6 +71,8 @@ public class World {
 
 	//The number of entries in grid that carry 0. This variable is updated on the fly, when balloon is moved
 	private int notConnected;
+	
+	private long runtime;
 
 	public World(){
 		//Initialize the lists. Balloons and wind layers
@@ -103,7 +108,7 @@ public class World {
 
 
 		//initialize output stream
-		fos = new FileOutputStream("simulation_coverage.txt");
+		fos = new FileOutputStream(SIMULATION_COVERAGE_FILE);
 
 
 		/*
@@ -131,17 +136,7 @@ public class World {
 	}
 
 
-	public String step() throws IOException{
-		currentStep++;
-		applyDecision();		
-		applyCurrents();
-		updateStatistics();
-
-
-
-		return toString();
-
-	}
+	
 	private void moveBetweenLayers(Balloon balloon, WindLayer newLayer) {
 
 
@@ -150,23 +145,37 @@ public class World {
 
 	}
 
-	public void applyCurrents(){
-		for(Balloon b : balloons){
+//	public void applyCurrents(){
+//		for(Balloon b : balloons){
+//			moveBalloon(b);
+//		}
+//
+//	}
+//	public void applyDecision(){
+//
+//		/*	Apply decisions to all balloons that are not currently moving 
+//		 *	to another layer
+//		 */
+//		for(Balloon b : balloons){
+//			applyDecision2(b);
+//		}
+//
+//	}
+	public String step() throws IOException{
+		currentStep++;
+
+		for(Balloon b: balloons){
+			applyDecision1(b);
 			moveBalloon(b);
 		}
+	
+		updateStatistics();
+
+		System.out.println("Step "+currentStep + " is complete.");
+
+		return toString();
 
 	}
-	public void applyDecision(){
-
-		/*	Apply decisions to all balloons that are not currently moving 
-		 *	to another layer
-		 */
-		for(Balloon b : balloons){
-			applyDecision2(b);
-		}
-
-	}
-
 	private void applyDecision1(Balloon b) {
 		//Control Algorithm 1
 		int x = b.getX();
@@ -176,7 +185,7 @@ public class World {
 		boolean isMoving = b.isMovingDown()||b.isMovingUp();
 
 		if(grid[x][y]>1 && !isMoving){
-
+			
 			int currentID = b.getWindLayer().getId();
 			//Start moving down if at top. Else randomly up or down
 			if(currentID==NUMBER_OF_CURRENTS-1){
@@ -209,16 +218,14 @@ public class World {
 		 * 
 		 * Also it does not matter if the balloon is already moving, the vertical 
 		 * direction can still be changed
-		 * 
-		 * PROBLEM V.1.0:
-		 * The algorithm doesn't anticipate all the balloons on its way to the same place
-		 * That's why nothing erupts the status quo
+
 		 * 
 		 * */
 		int x = b.getX();
 		int y = b.getY();
-		boolean isMoving = b.isMovingDown()||b.isMovingUp();
-		if(grid[x][y] > 1 && !isMoving){
+
+		if(grid[x][y] > 1){
+			//If the cell is crowded, then staying is not an option. Must move
 			int currentID = b.getWindLayer().getId();
 			
 			//find the neighbouring layers
@@ -242,9 +249,6 @@ public class World {
 			int projectedX = x+b.getWindLayer().getWind(x, y).getFirst();
 			int projectedY = y+b.getWindLayer().getWind(x, y).getSecond();
 			
-			//Correction
-//			int optionStay = grid[getAdjustedX(projectedX)][getAdjustedY(projectedY)];
-			int optionStay = grid[x][y];
 			//Lets see what neighbouring currents would do
 			//Option move down
 			int projectedXBelow = x + stratosphere.get(layerBelow).getWind(x, y).getFirst();
@@ -258,19 +262,12 @@ public class World {
 			
 			int optionGoUp = grid[getAdjustedX(projectedXAbove)][getAdjustedY(projectedYAbove)];
 			
-			//Now we find the lowest number of the three options and select that option
-			 if(optionStay <= optionGoUp && optionStay <= optionGoDown){
-				//STAY
-				b.stopVertical();
-			
-			}
-			 else if(optionGoUp <= optionStay && optionGoUp <= optionGoDown){
+			  if(optionGoUp <= optionGoDown){
 				//GO UP
 				
 				b.goUp();
 			}
 
-		
 			else{
 				//GO DOWN
 			
@@ -279,7 +276,125 @@ public class World {
 			
 		}
 	}
+	
+	private void applyDecision3(Balloon b){
+		/*
+		 * Control algorithm 3
+		 * 
+		 * Slight improvement over algorithm 2. Instead of locating 
+		 * the least occupied area, it finds a critical area in the grid
+		 * and navigates towards that space. This function relies on 
+		 * findCritical and distance private functions.
+		 * 
+		 * */
+		int x = b.getX();
+		int y = b.getY();
 
+		if(grid[x][y] > 1){
+			//If the cell is crowded, then staying is not an option. Must move
+			int currentID = b.getWindLayer().getId();
+			
+			//find the neighbouring layers
+			int layerBelow = currentID;
+			int layerAbove = currentID;
+			
+			//Fix boundary cases. Top or bottom layer
+			if(currentID == 0){
+				layerBelow = currentID; //unchanged
+				layerAbove = currentID + 1;
+		
+			}
+			if(currentID == NUMBER_OF_CURRENTS-1){
+				layerAbove = currentID; //unchanged
+				layerBelow = currentID - 1;
+
+			}
+			
+			//Find critical area in the grid
+			Pair<Integer,Integer> criticalPoint = findCriticalPoint(x,y);
+			
+			//Lets see what neighbouring currents would do
+			//Option move down
+			int projectedXBelow = x + stratosphere.get(layerBelow).getWind(x, y).getFirst();
+			int projectedYBelow = y + stratosphere.get(layerBelow).getWind(x, y).getSecond();
+			
+			
+			//Option move up
+			int projectedXAbove = x + stratosphere.get(layerAbove).getWind(x, y).getFirst();
+			int projectedYAbove = y + stratosphere.get(layerAbove).getWind(x, y).getSecond();
+			
+			
+			//What option moves the balloon closest to the critical area
+			Pair<Integer,Integer> optionDown = new Pair<Integer,Integer>(projectedXBelow,projectedYBelow);
+			Pair<Integer,Integer> optionUp = new Pair<Integer,Integer>(projectedXAbove,projectedYAbove);
+		
+			
+			double optionGoUp = distance(criticalPoint,optionUp);
+			double optionGoDown = distance(criticalPoint,optionDown);
+			
+			  if(optionGoUp <= optionGoDown){
+				//GO UP
+				b.goUp();
+			}
+
+			else{
+				//GO DOWN
+				b.goDown();
+			}
+			
+		}
+	}
+
+	private Pair<Integer,Integer> findCriticalPoint(int xB, int yB ){
+		int criticalX = 0;
+		int criticalY = 0;
+		
+		/*
+		 * This method browses through the whole world grid and analyzes
+		 * the criticality of each cell. The size of the range that is
+		 * taken into consideration is the global variable RANGE. When 
+		 * all cells have been examined and rated, the one with the lowest
+		 * score is returned as the most critical cell
+		 * */
+		int runningSum = 0;
+		int currentLow = 10;
+		for(int x=(xB-RANGE); x<(xB+RANGE); x++){
+			for(int y=(yB-RANGE); y<(yB+RANGE); y++){
+				//Now find the sum of all the cells in the RANGE
+				runningSum = 0;
+				for(int xRange = (x-RANGE); xRange<(x+RANGE); xRange++){
+					for(int yRange = (y-RANGE); yRange<(y+RANGE); yRange++){
+						runningSum += grid[getAdjustedX(xRange)][getAdjustedY(yRange)];
+					}
+				}
+				if(runningSum<currentLow){
+					currentLow = runningSum;
+					criticalX = x;
+					criticalY = y;
+					}
+				
+			}
+		}
+		
+		Pair<Integer,Integer> critical = new Pair<>(criticalX,criticalY);
+		return critical;
+	}
+	
+	private static double distance(Pair<Integer,Integer> a, Pair<Integer,Integer> b){
+		/*
+		 * Helper function that returns the distance between two
+		 * points in a plane according to the distance formula:
+		 * 
+		 * d = sqrt((x2-x1)^2+(y2-y1)^2)
+		 * */
+		int x1 = a.getFirst();
+		int y1 = a.getSecond();
+		int x2 = b.getFirst();
+		int y2 = b.getSecond();
+		
+		
+		return (Math.sqrt(Math.pow((x2-x1), 2)+Math.pow((y2-y1), 2)));
+	}
 	public void createBalloon(){
 		Balloon b = new Balloon(0,0,stratosphere.get(0));
 		balloons.add(b);
@@ -338,6 +453,11 @@ public class World {
 		if(altitude>=3 && altitude <6){return stratosphere.get(1);}
 		if(altitude>=6 && altitude <9){return stratosphere.get(2);}
 		if(altitude>=9){return stratosphere.get(3);}
+		
+//		if(altitude>=0 && altitude <1){return stratosphere.get(0);}
+//		if(altitude>=1 && altitude <2){return stratosphere.get(1);}
+//		if(altitude>=2 && altitude <3){return stratosphere.get(2);}
+//		if(altitude>=3){return stratosphere.get(3);}
 
 		return null;
 	}
@@ -402,11 +522,18 @@ public class World {
 
 	private void updateStatistics() throws IOException {
 		accumulatedCoverage += (notConnected/(WORLD_SIZE*WORLD_SIZE));
-
-
+		StringBuilder str = new StringBuilder();
+	
 		float currentCoverage = (float)(TOTAL_CELLS-notConnected)/(TOTAL_CELLS);
-		String n = Integer.toString(currentStep) +"\t" + Float.toString(currentCoverage) +"\n";
-		fos.write(n.getBytes());
+		
+		DecimalFormat twoPlaces = new DecimalFormat("0.000000");
+		str.append(currentStep);
+		str.append("\t");
+		str.append(twoPlaces.format(currentCoverage).replaceAll(",","."));
+		
+		str.append(System.getProperty("line.separator"));
+		//String n = Integer.toString(currentStep) +"\t" + Float.toString(currentCoverage) +"\n";
+		fos.write(str.toString().getBytes());
 		//Initialize the file to write coverage data
 	}
 
@@ -420,6 +547,8 @@ public class World {
 	public String printStats() {
 
 		StringBuilder stats = new StringBuilder("Statistics for run.\n\n");
+		
+		stats.append("Runtime:" + runtime/1000000+"ms\n");
 		stats.append("Number of steps:" + NUMBER_OF_STEPS+"\n");
 		stats.append("World size: " + WORLD_SIZE + "\n");
 		stats.append("Number of balloons: " + NUMBER_OF_BALLOONS + "\n");
@@ -433,10 +562,12 @@ public class World {
 
 	public void simulate() throws IOException{
 		int runner = 0;
+		 long start = System.nanoTime();
 		while(runner < NUMBER_OF_STEPS){
 			step();
 			runner++;
 		}
+		runtime = System.nanoTime() - start;
 		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
 	}
 
@@ -486,8 +617,14 @@ public class World {
 			}catch(Exception e){}
 
 		}
-	}
 
+	}
+	public static void main(String args[]){
+//		Pair<Integer,Integer> a = new Pair<Integer,Integer>(1,1);
+//		Pair<Integer,Integer> b = new Pair<Integer,Integer>(1,4);
+//		double d = distance(a,b);
+//		System.out.println(d);
+	}
 
 
 

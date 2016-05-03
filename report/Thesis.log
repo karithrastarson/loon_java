@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.4.27)  27 APR 2016 02:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.4.27)  2 MAY 2016 19:36
 entering extended mode
 **Thesis.tex
 (Thesis.tex
@@ -502,6 +502,99 @@ Package: nomencl 2005/09/22 v4.2 Nomenclature package (LN)
 \nom@tempdim=\dimen163
 \nomitemsep=\skip76
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\algorithm2e\algorithm2e.sty"
+Package: algorithm2e 2013/01/06 v5.00 algorithms environments
+\c@AlgoLine=\count125
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\xspace.sty"
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\relsize.sty"
+Package: relsize 2003/07/04 ver 3.1
+)
+********************************************************
+Package `algorithm2e' Release 5.0 -- january 06 2013 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (cfiorio@um2.fr)
+********************************************************
+\skiptotal=\skip77
+\skiplinenumber=\skip78
+\skiprule=\skip79
+\skiphlne=\skip80
+\skiptext=\skip81
+\skiplength=\skip82
+\algomargin=\skip83
+\skipalgocfslide=\skip84
+\algowidth=\dimen164
+\inoutsize=\dimen165
+\inoutindent=\dimen166
+\interspacetitleruled=\dimen167
+\interspacealgoruled=\dimen168
+\interspacetitleboxruled=\dimen169
+\algocf@inoutbox=\box42
+\algocf@inputbox=\box43
+\AlCapSkip=\skip85
+\AlCapHSkip=\skip86
+\algoskipindent=\skip87
+\algocf@nlbox=\box44
+\algocf@hangingbox=\box45
+\algocf@untilbox=\box46
+\algocf@skipuntil=\skip88
+\algocf@capbox=\box47
+\algoheightruledefault=\skip89
+\algoheightrule=\skip90
+\algotitleheightruledefault=\skip91
+\algotitleheightrule=\skip92
+\c@algocfline=\count126
+\c@algocfproc=\count127
+\c@algocf=\count128
+\algocf@algoframe=\box48
+\algocf@algobox=\box49
+
+! LaTeX Error: Command \algorithm already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2334 }
+        %
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Command \algorithm* already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2342 }
+        %
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Command \listofalgorithms already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2349 }
+        %
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
 \@nomenclaturefile=\write4
 
 Writing nomenclature file Thesis.nlo
@@ -581,7 +674,7 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 \XKV@toks=\toks36
 \XKV@tempa@toks=\toks37
 )
-\XKV@depth=\count125
+\XKV@depth=\count129
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 LaTeX Font Info:    Try loading font information for OT1+mdbch on input line 18
@@ -602,7 +695,7 @@ LaTeX Font Info:    Overwriting symbol font `mathdesignB' in version `bold'
 (Font)                  MDB/mdbch/m/n --> MDB/mdbch/b/n on input line 498.
 LaTeX Font Info:    Redeclaring math accent \widetilde on input line 532.
 LaTeX Font Info:    Redeclaring math accent \widehat on input line 533.
-\rulethickness=\skip77
+\rulethickness=\skip93
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\fontenc.sty"
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
@@ -628,269 +721,72 @@ LaTeX Warning: Unused global option(s):
     [A4,openany].
 
 (Thesis.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 30.
-LaTeX Font Info:    Try loading font information for MDA+cmr on input line 30.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for MDA+cmr on input line 31.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdacmr.fd"
 File: mdacmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 30.
-LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 30.
-LaTeX Font Info:    Try loading font information for MDB+cmr on input line 30.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for MDB+cmr on input line 31.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbcmr.fd"
 File: mdbcmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    ... okay on input line 31.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count126
-\scratchdimen=\dimen164
-\scratchbox=\box42
-\nofMPsegments=\count127
-\nofMParguments=\count128
+\scratchcounter=\count130
+\scratchdimen=\dimen170
+\scratchbox=\box50
+\nofMPsegments=\count131
+\nofMParguments=\count132
 \everyMPshowfont=\toks38
-\MPscratchCnt=\count129
-\MPscratchDim=\dimen165
-\MPnumerator=\count130
-\makeMPintoPDFobject=\count131
+\MPscratchCnt=\count133
+\MPscratchDim=\dimen171
+\MPnumerator=\count134
+\makeMPintoPDFobject=\count135
 \everyMPtoPDFconversion=\toks39
 )
-\c@maskedRefs=\count132
+\c@maskedRefs=\count136
  ("C:\Program Files\MiKTeX 2.9\tex\latex\apacite\english.apc"
 File: english.apc 2013/07/21 v6.03 apacite language file
 LaTeX Info: Redefining \BPBI on input line 129.
 LaTeX Info: Redefining \BHBI on input line 130.
 )
 ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 30.
+LaTeX Info: Redefining \selectfont on input line 31.
  ABD: EveryShipout initializing macros
 (TeX_files/titlePage.tex
-<graphics/tex_dtu_uk_a1_cmyk.pdf, id=4, 248.93pt x 58.2175pt>
-File: graphics/tex_dtu_uk_a1_cmyk.pdf Graphic file (type pdf)
+! I can't write on file `Thesis.pdf'.
+Please type another file name for output
+! Emergency stop.
+<argument> ...stobj \GPT@objref }}}\fi \pdfximage 
+                                                  \GPT@RuleAttr \ifx \GPT@pa...
+l.8 ...textwidth]{graphics/tex_dtu_uk_a1_cmyk.pdf}
+                                                  
+*** (job aborted, file error in nonstop mode)
 
-<use graphics/tex_dtu_uk_a1_cmyk.pdf>
-Package pdftex.def Info: graphics/tex_dtu_uk_a1_cmyk.pdf used on input line 8.
-(pdftex.def)             Requested size: 390.0pt x 91.21777pt.
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 23.88496pt on input line 15.
-LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 23.88496pt on input line 15.
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Try loading font information for OML+mdbch on input line 17
-.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbch\omlmdbch.fd"
-File: omlmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OML/mdbch.
-)
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Try loading font information for OMS+mdbch on input line 17
-.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbch\omsmdbch.fd"
-File: omsmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMS/mdbch.
-)
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Try loading font information for OMX+mdbch on input line 17
-.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbch\omxmdbch.fd"
-File: omxmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMX/mdbch.
-)
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Try loading font information for MDA+mdbch on input line 17
-.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbch\mdamdbch.fd"
-File: mdamdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDA/mdbch.
-)
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Try loading font information for MDB+mdbch on input line 17
-.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\mathdesign\mdbch\mdbmdbch.fd"
-File: mdbmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDB/mdbch.
-)
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 17.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 17.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 17.
-LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 13.82408pt on input line 18.
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 16.58891pt on input line 23.
- [1
-
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./graphics/tex_dtu_uk_a1_
-cmyk.pdf>])
-LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 16.58891pt on input line 35.
- (Thesis.toc
-LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 11.52008pt on input line 2.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 5.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 5.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 5.76004pt on input line 5.
-)
-\tf@toc=\write5
- (Thesis.lot)
-\tf@lot=\write6
- (Thesis.lof)
-\tf@lof=\write7
-
-No file Thesis.nls.
-[1] [2] (TeX_files/theModel_intro.tex
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 1.
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 1.
-LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 1.
-LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 1.
-) (TeX_files/theModel_description.tex
-[1
-
-]) (TeX_files/theModel_data.tex
-<graphics/WindLayers.pdf, id=23, 597.23125pt x 845.1575pt>
-File: graphics/WindLayers.pdf Graphic file (type pdf)
-
-<use graphics/WindLayers.pdf>
-Package pdftex.def Info: graphics/WindLayers.pdf used on input line 4.
-(pdftex.def)             Requested size: 369.60832pt x 304.55441pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (TeX_files/theModel_simnpar.tex [2]
-Overfull \hbox (31.79955pt too wide) in paragraph at lines 5--6
-\T1/mdbch/m/n/12 able is usu-ally set to the num-ber of cells in the earth grid
-, i.e WORLD_SIZE$[]$.This
- []
-
-[3 <./graphics/WindLayers.pdf>]
-Overfull \hbox (3.25659pt too wide) in paragraph at lines 17--18
-[]\T1/mdbch/m/n/12 Apply de-ci-sions: All bal-loons de-cide, us-ing the con-tro
-l al-go-rithm, whether
- []
-
-)
-No file Thesis.nls.
-No file Thesis.bbl.
-[4] [5] (Thesis.aux) ) 
+ 
 Here is how much of TeX's memory you used:
- 14694 strings out of 493698
- 272544 string characters out of 3144382
- 397098 words of memory out of 3000000
- 17661 multiletter control sequences out of 15000+200000
- 56032 words of font info for 100 fonts, out of 3000000 for 9000
+ 15843 strings out of 493698
+ 288267 string characters out of 3144382
+ 434659 words of memory out of 3000000
+ 18873 multiletter control sequences out of 15000+200000
+ 7278 words of font info for 19 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 55i,11n,54p,708b,289s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/tex
-nansi.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/bitstrea/charter/bchb8a.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/bitstrea/charter/bchr8a.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/bitstrea/charter/bchri8a.pfb><C:/Program Files/M
-iKTeX 2.9/fonts/type1/mathdesign/mdbch/md-chb8t.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/mathdesign/mdbch/md-chr8t.pfb>
-Output written on Thesis.pdf (8 pages, 143752 bytes).
-PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 29 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 55i,1n,54p,409b,119s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
