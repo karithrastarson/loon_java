@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
-
 import bo.Balloon;
 import bo.WindLayer;
 import structures.Pair;
@@ -26,6 +25,10 @@ public class World {
 	 * Number of currents in the system
 	 * Max altitude of a balloon
 	 * Min altitude of a balloon
+	 * TOTAL_CELLS is used for statistical calculations
+	 * ALGORITHM chooses which algorithm to use
+	 * FileOutputStream is the stream in which the data will be collected
+	 * The two files are used for storing the data from the simualation
 	 * 
 	 */
 
@@ -51,15 +54,13 @@ public class World {
 	private ArrayList<Balloon> balloons;
 	private int[][] grid;
 	
-	
 	//heatmap counts how many times each cell interacts with a balloon
 	private int[][] heatmap;
-
-
 
 	//Various variables
 	private int currentStep;
 	private static BufferedWriter coverageWriter;
+	
 	/*
 	 * STATISTICAL VARIABLES USED FOR MEASUREMENT
 	 */
@@ -78,7 +79,7 @@ public class World {
 
 	//The number of entries in grid that carry 0. This variable is updated on the fly, when balloon is moved
 	private int notConnected;
-	
+
 	private long runtime;
 
 	public World(){
@@ -113,10 +114,8 @@ public class World {
 
 		writeWindLayersToFile();
 
-
 		//initialize output stream
 		fos = new FileOutputStream(SIMULATION_COVERAGE_FILE);
-
 
 		/*
 		 * Initialize the earth grid:
@@ -143,9 +142,8 @@ public class World {
 		}
 	}
 
-	public String step() throws IOException{
+	public void step() throws IOException{
 		currentStep++;
-
 		for(Balloon b: balloons){
 			
 			switch(ALGORITHM){
@@ -156,21 +154,21 @@ public class World {
 			case '3': applyDecision3(b);
 				break;
 			}
-			
 			moveBalloon(b);
 		}
-	
 		updateStatistics();
-
+		
 		System.out.println("Step "+currentStep + " is complete.");
-
-		return toString();
-
 	}
 	
 	private void moveBetweenLayers(Balloon balloon, WindLayer newLayer) {
 
-
+		/*
+		 * This function moves a balloon to a new layer and stops the vertical
+		 * movement of the balloon if it has reached the wind layer it was headed for
+		 * 
+		 * 
+		 * */
 		balloon.setWindLayer(newLayer);
 		
 		if(newLayer.equals(balloon.getNextLayer())){
@@ -180,22 +178,6 @@ public class World {
 
 	}
 
-//	public void applyCurrents(){
-//		for(Balloon b : balloons){
-//			moveBalloon(b);
-//		}
-//
-//	}
-//	public void applyDecision(){
-//
-//		/*	Apply decisions to all balloons that are not currently moving 
-//		 *	to another layer
-//		 */
-//		for(Balloon b : balloons){
-//			applyDecision2(b);
-//		}
-//
-//	}
 
 	private void applyDecision1(Balloon b) {
 		//Control Algorithm 1
@@ -357,16 +339,24 @@ public class World {
 	}
 
 	private Pair<Integer,Integer> findCriticalPoint(int xB, int yB ){
-		int criticalX = 0;
-		int criticalY = 0;
+	
 		
 		/*
-		 * This method browses through the whole world grid and analyzes
-		 * the criticality of each cell. The size of the range that is
+		 * This method browses through the whole world grid and measures
+		 * the "criticality" of each cell. The size of the range that is
 		 * taken into consideration is the global variable RANGE. When 
 		 * all cells have been examined and rated, the one with the lowest
-		 * score is returned as the most critical cell
+		 * score is returned as the most critical cell. 
+		 * 
+		 * The currentLow is initialized as some random high number, to make sure that 
+		 * the loops will find some point with a lower score.
+		 * 
+		 * The runningSum variable is used as a temporary variable when calculating
+		 * the crtiticality for a given cell
 		 * */
+		
+		int criticalX = 0;
+		int criticalY = 0;
 		int runningSum = 0;
 		int currentLow = 10;
 		for(int x=(xB-RANGE); x<(xB+RANGE); x++){
@@ -406,14 +396,20 @@ public class World {
 		
 		return (Math.sqrt(Math.pow((x2-x1), 2)+Math.pow((y2-y1), 2)));
 	}
-	public void createBalloon(){
+	private void createBalloon(){
 		Balloon b = new Balloon(0,0,stratosphere.get(0));
 		balloons.add(b);
 		grid[0][0]++;
-		
 		heatmap[0][0]++;
 	}
 
+	private void createBalloon(int x, int y){
+		Balloon b = new Balloon(x,y,stratosphere.get(0));
+		balloons.add(b);
+		grid[x][y]++;
+		heatmap[x][y]++;
+	}
+	
 	public void moveBalloon(Balloon balloon){
 		/*
 		 * This function is responsible for moving balloons. It first has to check
@@ -438,10 +434,11 @@ public class World {
 		int x = balloon.getX();
 		int y = balloon.getY();
 
-		//Update the grid
+		//Update the grid. The balloon is leaving these coordinates.
 		grid[x][y]--;
 
 		//if the old slot has 0, then number of notConnected increases by one
+		//then it also means that the connection is dropped at that location
 		if(grid[x][y]==0){notConnected++;droppedConnections++;}
 		//Move the balloon
 		balloon.moveWithWind();
@@ -465,20 +462,17 @@ public class World {
 	private WindLayer getLayerFromAltitude(int altitude) {
 		//THIS FUNCTION HAS TO BE IMPLEMENTED IN A NICER WAY
 
-		if(altitude>=0 && altitude < 2250){return stratosphere.get(0);}
-		if(altitude>=2250 && altitude < 4500){return stratosphere.get(1);}
-		if(altitude>=4500 && altitude < 6750){return stratosphere.get(2);}
-		if(altitude>=6750){return stratosphere.get(3);}
+		if(altitude>=MIN_ALTITUDE && altitude < (MAX_ALTITUDE/4)){return stratosphere.get(0);}
+		if(altitude>=(MAX_ALTITUDE/NUMBER_OF_CURRENTS) && altitude < (MAX_ALTITUDE/2)){return stratosphere.get(1);}
+		if(altitude>=(MAX_ALTITUDE/2) && altitude < (3*MAX_ALTITUDE/2)){return stratosphere.get(2);}
+		if(altitude>=(3*MAX_ALTITUDE/2)){return stratosphere.get(3);}
 		
-//		if(altitude>=0 && altitude <1){return stratosphere.get(0);}
-//		if(altitude>=1 && altitude <2){return stratosphere.get(1);}
-//		if(altitude>=2 && altitude <3){return stratosphere.get(2);}
-//		if(altitude>=3){return stratosphere.get(3);}
-
+		System.out.println("No wind layer found for altitude: " + altitude);
 		return null;
 	}
 
 	private void adjustAltitude(Balloon balloon) {
+		
 		/*If a balloon moves below the MIN ALTITUDE
 		 * or above the MAX ALTITUDE then it is moved back to the 
 		 * boundaries and the vertical movement is stopped
@@ -496,8 +490,13 @@ public class World {
 
 	}
 
-	//Method used to adjust the position of the balloon when it travels out of bounds
+	
 	private void adjustPosition(Balloon balloon) {
+		/*
+		 *Method used to adjust the position of the balloon when it travels out of bounds
+		 * 
+		 */
+		 
 		int x = balloon.getX();
 		int y = balloon.getY();
 
@@ -517,6 +516,10 @@ public class World {
 	}
 	
 	private int getAdjustedX(int oldX){
+		/*
+		 * Similar function as adjustPosition but just returns
+		 * the coordinate in stead of moving an actual balloon object
+		 * */
 		if(oldX < 0){
 			return oldX + WORLD_SIZE;
 		}
@@ -527,6 +530,10 @@ public class World {
 		return oldX;
 	}
 	private int getAdjustedY(int oldY){
+		/*
+		 * Similar function as adjustPosition but just returns
+		 * the coordinate in stead of moving an actual balloon object
+		 * */
 		if(oldY < 0){
 			return oldY + WORLD_SIZE;
 		}
@@ -536,6 +543,7 @@ public class World {
 		return oldY;
 	}
 
+	
 	private void updateStatistics() throws IOException {
 		accumulatedCoverage += (notConnected/(WORLD_SIZE*WORLD_SIZE));
 		StringBuilder str = new StringBuilder();
@@ -556,12 +564,6 @@ public class World {
 	@Override
 	public String toString() {
 
-
-		return printStats();
-	}
-
-	public String printStats() {
-
 		StringBuilder stats = new StringBuilder("Statistics for run.\n\n");
 		
 		stats.append("Runtime:" + runtime/1000000+"ms\n");
@@ -574,6 +576,8 @@ public class World {
 		stats.append("Dropped conncetions: "+droppedConnections+"\n");
 		return stats.toString();
 	}
+
+
 	
 
 	public void simulate() throws IOException{
@@ -583,15 +587,22 @@ public class World {
 			step();
 			runner++;
 		}
-		
+
+		printHeatMap();
 		
 		runtime = System.nanoTime() - start;
 		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
-		printHeatMap();
+		
 	}
 
 
 	private void printHeatMap() {
+		/*
+		 * This function prints the heatmap array to file.
+		 * 
+		 * This is used to vizualize the  most frequently visited cells
+		 * */
+		
 		File fileHeat = new File(SIMULATION_HEATMAP);
 		try {
 			BufferedWriter buffHeat = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileHeat)));
@@ -604,7 +615,7 @@ public class World {
 				}
 				buffHeat.newLine();
 			}
-		
+			buffHeat.close();
 		} catch (FileNotFoundException e) {
 		
 			e.printStackTrace();
@@ -612,6 +623,7 @@ public class World {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	public ArrayList<Balloon> getBalloons() {
@@ -627,19 +639,10 @@ public class World {
 
 			try{
 
-				//FileOutputStream outx = new FileOutputStream(fileX);
-				//FileOutputStream outy = new FileOutputStream(fileY);
-
 				BufferedWriter outx = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileX)));
 				BufferedWriter outy = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileY)));
 				for(int x = 0; x < WORLD_SIZE; x++){
 					for(int y = 0; y < WORLD_SIZE; y++){
-
-
-
-						//byte[] writeX = windlayer.getWind(x, y).getFirst().toString().getBytes();
-						//	byte[] writeY = windlayer.getWind(x, y).getSecond().toString().getBytes();
-
 
 						outx.write(windlayer.getWind(x, y).getFirst().toString());
 						outy.write(windlayer.getWind(x, y).getSecond().toString());
@@ -661,13 +664,6 @@ public class World {
 		}
 
 	}
-	public static void main(String args[]){
-//		Pair<Integer,Integer> a = new Pair<Integer,Integer>(1,1);
-//		Pair<Integer,Integer> b = new Pair<Integer,Integer>(1,4);
-//		double d = distance(a,b);
-//		System.out.println(d);
-	}
-
 
 
 }
