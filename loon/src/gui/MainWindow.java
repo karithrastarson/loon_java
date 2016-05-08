@@ -67,11 +67,8 @@ public class MainWindow {
 		JButton btnStep = new JButton("Step");
 		JButton btnMultiStep = new JButton("Multi-Step");
 		
-		JSlider sliderNumSteps = new JSlider(1,100,1);
-		
-       
-       
-
+		JSlider sliderNumSteps = new JSlider(1,200,1);
+	
 		JPanel buttons = new JPanel();
 		buttons.add(btnStep);
 		buttons.add(btnMultiStep);

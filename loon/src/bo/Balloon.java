@@ -15,7 +15,10 @@ public class Balloon {
 	//the layer that the balloon is in
 	WindLayer windLayer;
 
+	//the layer that the balloon is headed for
+	WindLayer nextLayer;
 	
+
 	public Balloon(){
 		x = 0;
 		y = 0;
@@ -24,6 +27,7 @@ public class Balloon {
 		x = _x;
 		y = _y;
 		windLayer = wl;
+		nextLayer=null;
 	}
 	
 	public void moveWithWind(){
@@ -54,7 +58,13 @@ public class Balloon {
 	public void setWindLayer(WindLayer newLayer) {
 		windLayer = newLayer;
 	}
-
+	
+	public WindLayer getNextLayer() {
+		return nextLayer;
+	}
+	public void setNextLayer(WindLayer nextLayer) {
+		this.nextLayer = nextLayer;
+	}
 
 	public int getAltitude() {
 		return altitude;
@@ -79,6 +89,7 @@ public class Balloon {
 	public void stopVertical(){
 		this.isMovingDown = false;
 		this.isMovingUp = false;
+		this.nextLayer = null;
 	}
 	
 	public void updateAltitude(int alt){

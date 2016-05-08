@@ -31,22 +31,29 @@ public class World {
 
 	public final int WORLD_SIZE = 250;
 	private final int RANGE = 5;
-	private final double EXTRA_BALLOONS = 1.5;
+	private final double EXTRA_BALLOONS = 1.25;
 	private final int NUMBER_OF_BALLOONS = (int) ((int) WORLD_SIZE*WORLD_SIZE*EXTRA_BALLOONS);
-	private final int VERTICAL_SPEED = 3;
+	private final int VERTICAL_SPEED = 30;
 	private final int NUMBER_OF_STEPS = 1000;
 	private final int NUMBER_OF_CURRENTS = 4;
-	private final int MAX_ALTITUDE = 12;
+	private final int MAX_ALTITUDE = 9000;
 	private final int MIN_ALTITUDE = 0;
 	private final int TOTAL_CELLS = WORLD_SIZE*WORLD_SIZE;
+	private final char ALGORITHM = '1';
 	private FileOutputStream fos;
-	private final String SIMULATION_COVERAGE_FILE = "simulation_coverage_alg1_noDelay.txt";
+	private final String SIMULATION_COVERAGE_FILE = "simulation_coverage_alg"+ALGORITHM+".txt";
+	private final String SIMULATION_HEATMAP = "Simulation_Heatmap_alg"+ALGORITHM+".txt";
+
 	/*
 	 * CONTAINERS USED BY THE MODEL
 	 */
 	private ArrayList<WindLayer> stratosphere;
 	private ArrayList<Balloon> balloons;
 	private int[][] grid;
+	
+	
+	//heatmap counts how many times each cell interacts with a balloon
+	private int[][] heatmap;
 
 
 
@@ -81,7 +88,7 @@ public class World {
 
 		//Initialize the grid that represents the surface
 		grid = new int[WORLD_SIZE][WORLD_SIZE];
-
+		heatmap = new int[WORLD_SIZE][WORLD_SIZE];
 
 	}
 
@@ -120,6 +127,7 @@ public class World {
 		for(int i = 0; i < WORLD_SIZE; i++){
 			for(int j = 0; j < WORLD_SIZE; j++){
 				grid[i][j] = 0;
+				heatmap[i][j] = 0;
 				notConnected++;
 			}
 		}
@@ -135,13 +143,40 @@ public class World {
 		}
 	}
 
+	public String step() throws IOException{
+		currentStep++;
 
+		for(Balloon b: balloons){
+			
+			switch(ALGORITHM){
+			case '1':applyDecision1(b);
+				break;
+			case '2': applyDecision2(b);
+				break;
+			case '3': applyDecision3(b);
+				break;
+			}
+			
+			moveBalloon(b);
+		}
+	
+		updateStatistics();
+
+		System.out.println("Step "+currentStep + " is complete.");
+
+		return toString();
+
+	}
 	
 	private void moveBetweenLayers(Balloon balloon, WindLayer newLayer) {
 
 
 		balloon.setWindLayer(newLayer);
+		
+		if(newLayer.equals(balloon.getNextLayer())){
+			//has the balloon reached the layer it is headed for?
 		balloon.stopVertical();
+		}
 
 	}
 
@@ -161,47 +196,34 @@ public class World {
 //		}
 //
 //	}
-	public String step() throws IOException{
-		currentStep++;
 
-		for(Balloon b: balloons){
-			applyDecision1(b);
-			moveBalloon(b);
-		}
-	
-		updateStatistics();
-
-		System.out.println("Step "+currentStep + " is complete.");
-
-		return toString();
-
-	}
 	private void applyDecision1(Balloon b) {
 		//Control Algorithm 1
 		int x = b.getX();
 		int y = b.getY();
 
-		//If more than one balloons occupy this space, and balloon not moving,then start moving up or down
-		boolean isMoving = b.isMovingDown()||b.isMovingUp();
-
-		if(grid[x][y]>1 && !isMoving){
+		if(grid[x][y]>1){
 			
 			int currentID = b.getWindLayer().getId();
 			//Start moving down if at top. Else randomly up or down
 			if(currentID==NUMBER_OF_CURRENTS-1){
 				b.goDown();
+				b.setNextLayer(stratosphere.get(currentID - 1));
 			}
 			else if(currentID==0){
 				b.goUp();
+				b.setNextLayer(stratosphere.get(currentID + 1));
 			}
 			else{
 				Random rand = new Random();
 				boolean sign = rand.nextBoolean();
 				if(sign){
 					b.goUp();
+					b.setNextLayer(stratosphere.get(currentID + 1));
 				}
 				else{
 					b.goDown();
+					b.setNextLayer(stratosphere.get(currentID - 1));
 				}
 			}
 		}
@@ -294,54 +316,43 @@ public class World {
 			//If the cell is crowded, then staying is not an option. Must move
 			int currentID = b.getWindLayer().getId();
 			
-			//find the neighbouring layers
-			int layerBelow = currentID;
-			int layerAbove = currentID;
-			
-			//Fix boundary cases. Top or bottom layer
-			if(currentID == 0){
-				layerBelow = currentID; //unchanged
-				layerAbove = currentID + 1;
-		
-			}
-			if(currentID == NUMBER_OF_CURRENTS-1){
-				layerAbove = currentID; //unchanged
-				layerBelow = currentID - 1;
-
-			}
-			
 			//Find critical area in the grid
 			Pair<Integer,Integer> criticalPoint = findCriticalPoint(x,y);
 			
-			//Lets see what neighbouring currents would do
-			//Option move down
-			int projectedXBelow = x + stratosphere.get(layerBelow).getWind(x, y).getFirst();
-			int projectedYBelow = y + stratosphere.get(layerBelow).getWind(x, y).getSecond();
 			
+			int projectedX = 0;
+			int projectedY = 0;
+			double bestOption = 10000;
+			WindLayer bestLayer = null;
+			Pair<Integer,Integer> optionPair =  new Pair<Integer,Integer>(projectedX,projectedY);
 			
-			//Option move up
-			int projectedXAbove = x + stratosphere.get(layerAbove).getWind(x, y).getFirst();
-			int projectedYAbove = y + stratosphere.get(layerAbove).getWind(x, y).getSecond();
+			for(WindLayer wl : stratosphere){
+				 projectedX = x + wl.getWind(x, y).getFirst();
+				 projectedY = y + wl.getWind(x, y).getSecond();
+				 
+				 optionPair.setFirst(projectedX);
+				 optionPair.setSecond(projectedY);
+				 
+				 if(distance(optionPair, criticalPoint)<bestOption){
+					 bestOption = distance(optionPair, criticalPoint);
+					 bestLayer = wl;
+				 }
+				 
+			}
 			
-			
-			//What option moves the balloon closest to the critical area
-			Pair<Integer,Integer> optionDown = new Pair<Integer,Integer>(projectedXBelow,projectedYBelow);
-			Pair<Integer,Integer> optionUp = new Pair<Integer,Integer>(projectedXAbove,projectedYAbove);
-		
-			
-			double optionGoUp = distance(criticalPoint,optionUp);
-			double optionGoDown = distance(criticalPoint,optionDown);
-			
-			  if(optionGoUp <= optionGoDown){
-				//GO UP
+	
+			//Determine where the new layer is in relation to the old
+			if(bestLayer.getId()>currentID){
 				b.goUp();
+				b.setNextLayer(bestLayer);
 			}
-
-			else{
-				//GO DOWN
+			else if(bestLayer.getId()<currentID){
 				b.goDown();
+				b.setNextLayer(bestLayer);
 			}
-			
+			else{
+				b.stopVertical();
+			}
 		}
 	}
 
@@ -399,6 +410,8 @@ public class World {
 		Balloon b = new Balloon(0,0,stratosphere.get(0));
 		balloons.add(b);
 		grid[0][0]++;
+		
+		heatmap[0][0]++;
 	}
 
 	public void moveBalloon(Balloon balloon){
@@ -443,16 +456,19 @@ public class World {
 
 		//Update the grid
 		grid[newX][newY]++;
+		
+		//Update heatmap
+		heatmap[newX][newY]++;
 
 	}
 
 	private WindLayer getLayerFromAltitude(int altitude) {
 		//THIS FUNCTION HAS TO BE IMPLEMENTED IN A NICER WAY
 
-		if(altitude>=0 && altitude <3){return stratosphere.get(0);}
-		if(altitude>=3 && altitude <6){return stratosphere.get(1);}
-		if(altitude>=6 && altitude <9){return stratosphere.get(2);}
-		if(altitude>=9){return stratosphere.get(3);}
+		if(altitude>=0 && altitude < 2250){return stratosphere.get(0);}
+		if(altitude>=2250 && altitude < 4500){return stratosphere.get(1);}
+		if(altitude>=4500 && altitude < 6750){return stratosphere.get(2);}
+		if(altitude>=6750){return stratosphere.get(3);}
 		
 //		if(altitude>=0 && altitude <1){return stratosphere.get(0);}
 //		if(altitude>=1 && altitude <2){return stratosphere.get(1);}
@@ -558,7 +574,7 @@ public class World {
 		stats.append("Dropped conncetions: "+droppedConnections+"\n");
 		return stats.toString();
 	}
-
+	
 
 	public void simulate() throws IOException{
 		int runner = 0;
@@ -567,10 +583,36 @@ public class World {
 			step();
 			runner++;
 		}
+		
+		
 		runtime = System.nanoTime() - start;
 		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
+		printHeatMap();
 	}
 
+
+	private void printHeatMap() {
+		File fileHeat = new File(SIMULATION_HEATMAP);
+		try {
+			BufferedWriter buffHeat = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileHeat)));
+			for(int x = 0; x < WORLD_SIZE; x++){
+				for(int y = 0; y < WORLD_SIZE; y++){
+
+					buffHeat.write(Integer.toString(heatmap[x][y]));
+					buffHeat.write("\t");
+					
+				}
+				buffHeat.newLine();
+			}
+		
+		} catch (FileNotFoundException e) {
+		
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public ArrayList<Balloon> getBalloons() {
 		return balloons;
