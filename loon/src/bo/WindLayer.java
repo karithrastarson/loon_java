@@ -1,7 +1,10 @@
 package bo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 import structures.Pair;
 
@@ -14,7 +17,7 @@ public class WindLayer {
 	private Pair<Integer, Integer>[][] grid;
 	private int Id;
 	
-	public WindLayer(int worldSize, int id){
+	public WindLayer(int worldSize ,int id){
 		Random rand = new Random();
 		Id = id;
 		grid = new Pair[worldSize][worldSize];
@@ -50,8 +53,20 @@ public class WindLayer {
 					
 				grid[i][j] = new Pair<Integer, Integer>(x,y);
 			}
-		}
+		
+		
 
+		}
+		
+		
+
+	}
+	
+	public WindLayer(int worldSize, String textFileX, String textFileY, int id){
+		Id = id;
+		grid = new Pair[worldSize][worldSize];
+		
+		readFromFile(textFileX, textFileY, worldSize);
 	}
 	public Pair<Integer,Integer> getWind(int x, int y){
 
@@ -79,6 +94,36 @@ public class WindLayer {
 	@Override
 	public String toString() {
 		return "WindLayer [Id=" + Id + "]";
+	}
+	
+	private void readFromFile(String textfileX, String textfileY ,int world_size){
+		try {
+		Scanner inputX = new Scanner (new File(textfileX));
+		Scanner inputY = new Scanner (new File(textfileY));
+
+
+			for(int i = 0; i<world_size; i++){  
+				
+			Scanner colReaderX = new Scanner(inputX.nextLine());
+		    Scanner colReaderY = new Scanner(inputY.nextLine());
+		    
+				for(int j = 0; j<world_size; j++){
+					
+		        grid[i][j] = new Pair<Integer, Integer>(colReaderX.nextInt(),colReaderY.nextInt());
+		       
+		    }
+		   
+		    
+		    colReaderX.close();
+		    colReaderY.close();
+		}
+		
+		inputX.close();
+		inputY.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	   
 	

@@ -42,33 +42,44 @@ title('Windlayer 4')
 sim_cov_alg1 = importdata('loon/simulation_coverage_alg1.txt');
 sim_cov_alg2 = importdata('loon/simulation_coverage_alg2.txt');
 sim_cov_alg3 = importdata('loon/simulation_coverage_alg3.txt');
+sim_cov_alg4 = importdata('loon/simulation_coverage_alg4.txt');
 % 
 % 
  figure
- subplot(3,1,1)
+ subplot(2,2,1)
  hold on
  plot(sim_cov_alg1(:,1), sim_cov_alg1(:,2))
 title('Algorithm 1')
 xlabel('t')
  ylabel('Coverage')
- xlim([0 1000])
+ xlim([0 400])
  ylim([0 1])
- subplot(3,1,2)
+ subplot(2,2,2)
 
  plot(sim_cov_alg2(:,1), sim_cov_alg2(:,2))
 title('Algorithm 2')
 xlabel('t')
 ylabel('Coverage')
-xlim([0 1000])
+xlim([0 400])
 ylim([0 1])
-subplot(3,1,3)
 
+subplot(2,2,3)
 plot(sim_cov_alg3(:,1), sim_cov_alg3(:,2))
 title('Algorithm 3')
 xlabel('t')
 ylabel('Coverage')
-xlim([0 1000])
+xlim([0 400])
 ylim([0 1])
+
+subplot(2,2,4)
+plot(sim_cov_alg3(:,1), sim_cov_alg3(:,2))
+title('Algorithm 4')
+xlabel('t')
+ylabel('Coverage')
+xlim([0 400])
+ylim([0 1])
+
+
 % %print('report/graphics/coverage_alg1_vs_alg2','-dpdf')
 % %
 % % 
