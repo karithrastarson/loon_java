@@ -11,7 +11,7 @@ public class TextGUI {
 
 		World world = new World();
 		world.init();
-		world.simulate();
+		world.simulate_AL();
 		System.out.println(world.toString());
 
 	}

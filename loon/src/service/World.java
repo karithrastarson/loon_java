@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Random;
 import java.awt.List;
 import java.io.BufferedWriter;
@@ -34,20 +35,21 @@ public class World {
 	 * 
 	 */
 
-	public final int WORLD_SIZE = 100;
+	public final int WORLD_SIZE = 1000;
 	private final int RANGE = 10;
+	private final int LIFETIME = 2000;
 	private final double EXTRA_BALLOONS = 1.25;
 	private final int NUMBER_OF_BALLOONS = (int) ((int) WORLD_SIZE*WORLD_SIZE*EXTRA_BALLOONS);
 	private final int VERTICAL_SPEED = 40 ;
-	private final int NUMBER_OF_STEPS = 400;
+	private final int NUMBER_OF_STEPS = 2000;
 	private final int NUMBER_OF_CURRENTS = 4;
 	private final int MAX_ALTITUDE = 400;
 	private final int MIN_ALTITUDE = 0;
 	private final int TOTAL_CELLS = WORLD_SIZE*WORLD_SIZE;
-	private final char ALGORITHM = '4';
+	private final char ALGORITHM = '3';
 	private FileOutputStream fos;
-	private final String SIMULATION_COVERAGE_FILE = "simulation_coverage_alg"+ALGORITHM+".txt";
-	private final String SIMULATION_HEATMAP = "Simulation_Heatmap_alg"+ALGORITHM+".txt";
+	private final String SIMULATION_COVERAGE_FILE = "outputData/simulation_coverage_alg"+ALGORITHM+".txt";
+	private final String SIMULATION_HEATMAP = "outputData/Simulation_Heatmap_alg"+ALGORITHM+".txt";
 
 	/*
 	 * CONTAINERS USED BY THE MODEL
@@ -147,9 +149,9 @@ public class World {
 		 * 
 		 * */
 
-		for(int i = 0; i < NUMBER_OF_BALLOONS; i++){
-			createBalloon();
-		}
+//				for(int i = 0; i < NUMBER_OF_BALLOONS; i++){
+//					createBalloon();
+//				}
 
 	}
 
@@ -427,6 +429,16 @@ public class World {
 		grid[0][0]++;
 		heatmap[0][0]++;
 	}
+	private void removeBalloon(Balloon b){
+		int x = b.getX();
+		int y = b.getY();
+		
+		grid[x][y]--;
+		if(grid[x][y]==0){droppedConnections++;notConnected++;}
+		balloons_grid.removeObject(b, x, y);
+		balloons.remove(b);
+		
+	}
 
 	private void createBalloon(int x, int y){
 		Balloon b = new Balloon(x,y,stratosphere.get(0));
@@ -617,7 +629,6 @@ public class World {
 			step();
 			runner++;
 		}
-
 		printHeatMap();
 
 		runtime = System.nanoTime() - start;
@@ -664,8 +675,8 @@ public class World {
 		//Write the layers to a file for vizualization
 		int count = 1;
 		for(WindLayer windlayer : stratosphere){
-			File fileX = new File("windlayer"+count+"_X.txt");
-			File fileY = new File("windlayer"+count+"_Y.txt");
+			File fileX = new File("outputData/windlayer"+count+"_X.txt");
+			File fileY = new File("outputData/windlayer"+count+"_Y.txt");
 
 			try{
 
@@ -695,16 +706,56 @@ public class World {
 
 	}
 
-
-
 	public ObjectGrid<Balloon> getBalloons_grid() {
 		return balloons_grid;
 	}
 
+	public void simulate_AL() throws IOException{
+		int runner = 0;
+		long start = System.nanoTime();
+		while(runner < NUMBER_OF_STEPS){
+			step2();
+			runner++;
+		}
+		printHeatMap();
 
+		runtime = System.nanoTime() - start;
+		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
+	}
+	public void step2() throws IOException{
+		currentStep++;
+		
+		if(balloons.size() < NUMBER_OF_BALLOONS){
+			createBalloon();
+		}
+		try{
+		for(Balloon b: balloons){
+			b.age();
+				switch(ALGORITHM){
+				case '1':applyDecision1(b);
+				break;
+				case '2': applyDecision2(b);
+				break;
+				case '3': applyDecision3(b);
+				break;
+				case '4': applyDecision4(b);
+				break;
+				}
+				moveBalloon(b);
+			}}catch(Exception e){
+				System.out.println("Error with balloons. Size: " + balloons.size());
+			}
+		
+		//Now we remove all balloons that are too old
+//		for(Balloon b : balloons){
+//			if(b.getAge() > LIFETIME){
+//				removeBalloon(b);
+//				createBalloon();
+//			}
+//				}
+		updateStatistics();
 
-
-
-
+		System.out.println("Step "+currentStep + " is complete.");
+	}
 }
 
