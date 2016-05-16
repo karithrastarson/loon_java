@@ -1,0 +1,11 @@
+The model focuses on the balloons and their movement around the stratosphere. The key components in the model are the following:
+
+\begin{description}
+    \item[The balloons:] The balloon is travels around the stratosphere and supplies Internet connection to the point on the grid it corresponds to. 
+    \item[The "grid":] The earth in this model is represented by a two dimensional array, or a grid, of integers. The integers represent the number of balloons currently serving this particular space on earth. If the number is zero this is point is construed as not connected. The goal is to make all value of the grid larger than zero. 
+    \item[The stratosphere:] The stratosphere is a collection of stratospheric wind layers which also are represented by a grid. The size of each wind layer equals the size of the earth grid. The layer object holds a collection of vectors which carry the wind strength in directions x and y. The stratosphere is organized so each wind layer occupies a certain altitude. That way each balloon is affected by only one wind layer at a time, determined by its current altitude. 
+\end{description}
+
+The model has some modifiable key parameters which are explained in chapter \ref{theModel_snp}. The model creates and initializes the ecosystem, which consists of the wind layers, balloons and the grid representing the earth. The simulation then moves each balloon according to its corresponding wind layer. The decision a balloon has to make is whether it should start moving upwards, downwards or stay put. This decision is the core of the model and will be developed in different ways and compared.
+
+

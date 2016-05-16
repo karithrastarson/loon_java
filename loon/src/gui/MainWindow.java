@@ -67,11 +67,8 @@ public class MainWindow {
 		JButton btnStep = new JButton("Step");
 		JButton btnMultiStep = new JButton("Multi-Step");
 		
-		JSlider sliderNumSteps = new JSlider(1,100,1);
-		
-       
-       
-
+		JSlider sliderNumSteps = new JSlider(1,200,1);
+	
 		JPanel buttons = new JPanel();
 		buttons.add(btnStep);
 		buttons.add(btnMultiStep);
@@ -98,7 +95,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				updateCanvas();
+				try {
+					updateCanvas();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				f.repaint();
 			}
 		});
@@ -108,7 +110,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i = 0; i<steps; i++){
-					updateCanvas();
+					try {
+						updateCanvas();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 				f.repaint();
@@ -119,7 +126,7 @@ public class MainWindow {
 		f.setVisible(true);
 	}
 
-	private static void updateCanvas(){
+	private static void updateCanvas() throws IOException{
 		world.step();
 		canvas.updateGraphics(world.getBalloons());
 	}
