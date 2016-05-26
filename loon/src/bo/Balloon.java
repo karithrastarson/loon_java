@@ -7,6 +7,7 @@ public class Balloon {
 	int x;
 	int y;
 	int altitude;
+	int age;
 	
 	boolean isMovingUp = false;
 	boolean isMovingDown = false;
@@ -28,6 +29,7 @@ public class Balloon {
 		y = _y;
 		windLayer = wl;
 		nextLayer=null;
+		age = 0;
 	}
 	
 	public void moveWithWind(){
@@ -54,7 +56,12 @@ public class Balloon {
 	public WindLayer getWindLayer() {
 		return windLayer;
 	}
-
+	public int getAge() {
+		return age;
+	}
+	public void age() {
+		this.age++;
+	}
 	public void setWindLayer(WindLayer newLayer) {
 		windLayer = newLayer;
 	}

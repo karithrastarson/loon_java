@@ -10,7 +10,7 @@ import structures.Pair;
 
 public class WindLayer {
 
-	private static final int DEFAULT_SPEED = 45;
+	private static final int MAX = 45;
 	private static final int NOISE = 5;
 	
 
@@ -26,7 +26,7 @@ public class WindLayer {
 
 		for(int i = 0; i<worldSize; i++){
 			for(int j = 0; j<worldSize; j++){
-				
+			int DEFAULT_SPEED = 0 + (int)(Math.random() * MAX);
 				int randomDeviation = 0 + (int)(Math.random() * NOISE);
 				int x=DEFAULT_SPEED,y=DEFAULT_SPEED;
 				if(Id==0){x = DEFAULT_SPEED; y = DEFAULT_SPEED;}

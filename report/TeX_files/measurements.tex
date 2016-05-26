@@ -1,0 +1,18 @@
+The collection of data in the model is twofold. First there is static data which is collected before and after the simulation. Those measurements include the parameters of the model as well as: 
+
+\begin{description}
+    \item[droppedConnections: ] The number of times a balloon leaves a spot and leaves it uncovered. That would mean that the connection would drop in that area until another balloon would fly over.
+    \item[accumulatedCoverage: ] The accumulated coverage of the simulation divided by the number of steps. This gives a concrete value for the quality of the control algorithm.
+    \item[run time: ]The time it took to run the simulation.
+\end{description}
+
+These three results, as well as the values for the parameters, are appended to a file called simulation\_results.txt which is a log file for the model. 
+
+The current coverage at step $t$ is output to a text file which is named after the algorithm used in that simulation, e.g. simulation\_coverage\_alg1.txt. This file is overwritten every simulation and has the following format.
+\begin{table}[]
+\centering
+\begin{tabular}{l|l}
+Step number & Current Coverage
+\end{tabular}
+\caption{simulation\_coverage file format}
+\end{table}
