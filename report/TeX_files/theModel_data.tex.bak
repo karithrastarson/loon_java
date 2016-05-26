@@ -1,7 +1,0 @@
-The only data necessary for this simulation is stratospheric weather data. The blabla
-
-\begin{figure}[h]
-\includegraphics[trim={4cm 10cm 4cm 9cm},clip]{graphics/WindLayers.pdf}
-\label{windlayers}
-\caption{Wind Layers}
-\end{figure}

@@ -35,12 +35,14 @@ public class World {
 	 */
 
 	public final int WORLD_SIZE = 200;
-	private final int NUMBER_OF_BALLOONS = 100;
-	private final int RANGE = (int) ((int) (Math.sqrt(2.0)*WORLD_SIZE)/(Math.sqrt(NUMBER_OF_BALLOONS)));
+	private final int NUMBER_OF_BALLOONS = 200;
+	//private final int MAXCOVERAGE = 1;
+	//public final int RANGE = (int)(Math.ceil((Math.sqrt((WORLD_SIZE*WORLD_SIZE)/(Math.PI * NUMBER_OF_BALLOONS)) *MAXCOVERAGE)));
+	public final int RANGE = (int) ((int) (Math.sqrt(2.0)*WORLD_SIZE)/(Math.sqrt(NUMBER_OF_BALLOONS)));
 	private final int COMMUNICATION_RADIUS = 10;
-	private final int LIFETIME = 500;
+	private final int LIFETIME = 200;
 	private final int VERTICAL_SPEED = 40 ;
-	private final int NUMBER_OF_STEPS = 5000;
+	private final int NUMBER_OF_STEPS = 3000;
 	private final int NUMBER_OF_CURRENTS = 4;
 	private final int MAX_ALTITUDE = 400;
 	private final int MIN_ALTITUDE = 0;
@@ -80,8 +82,6 @@ public class World {
 	//droppedConnection is the accumulated number of 0s in the grid
 	private int droppedConnections;
 
-	//simulationCoverage is the accumulated coverage for each step divided by the number of steps
-	private float simulationCoverage;
 
 	//The number of entries in grid that carry 0. This variable is updated on the fly, when balloon is moved
 	private int notConnected;
@@ -107,7 +107,6 @@ public class World {
 		//initialize statistical variables
 		accumulatedCoverage = 0;
 		droppedConnections = 0;
-		simulationCoverage = 0;
 		notConnected = 0;
 		currentStep = 0;
 		currentlyConnected = 0;
@@ -407,6 +406,7 @@ public class World {
 		
 		//Find wind layers available
 		ArrayList<WindLayer> knownLayers = new ArrayList<>();
+		knownLayers.add(b.getWindLayer());
 		for(Balloon tmpB : neighbours){
 			WindLayer tmpL = tmpB.getWindLayer();
 			
@@ -766,7 +766,7 @@ public class World {
 		printHeatMap();
 
 		runtime = System.nanoTime() - start;
-		simulationCoverage = accumulatedCoverage/NUMBER_OF_STEPS;
+
 
 	}
 

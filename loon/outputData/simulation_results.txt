@@ -1672,3 +1672,723 @@ Number of wind layers: 4
 Coverage over simulation: 0.6806091
 Dropped connections: 2412585
 
+Statistics for run: Thu May 26 17:10:57 CEST 2016
+Algorithm used: 4
+Runtime: 3360ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 28
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6576922
+Dropped connections: 472279
+
+Statistics for run: Thu May 26 17:11:00 CEST 2016
+Algorithm used: 4s
+Runtime: 3143ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 28
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.66091406
+Dropped connections: 484642
+
+Statistics for run: Thu May 26 17:11:54 CEST 2016
+Algorithm used: 4
+Runtime: 3582ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 28
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.66710347
+Dropped connections: 435880
+
+Statistics for run: Thu May 26 17:11:56 CEST 2016
+Algorithm used: 4s
+Runtime: 2752ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 28
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6604295
+Dropped connections: 496816
+
+Statistics for run: Thu May 26 17:12:34 CEST 2016
+Algorithm used: 4
+Runtime: 1497ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.42141357
+Dropped connections: 282200
+
+Statistics for run: Thu May 26 17:12:35 CEST 2016
+Algorithm used: 4s
+Runtime: 922ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.3952496
+Dropped connections: 285584
+
+Statistics for run: Thu May 26 17:13:10 CEST 2016
+Algorithm used: 1
+Runtime: 579ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.4536605
+Dropped connections: 322452
+
+Statistics for run: Thu May 26 17:13:11 CEST 2016
+Algorithm used: 4
+Runtime: 1439ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.29380593
+Dropped connections: 224709
+
+Statistics for run: Thu May 26 17:13:12 CEST 2016
+Algorithm used: 4s
+Runtime: 822ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.32977948
+Dropped connections: 261947
+
+Statistics for run: Thu May 26 17:14:31 CEST 2016
+Algorithm used: 1
+Runtime: 579ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.44772598
+Dropped connections: 335171
+
+Statistics for run: Thu May 26 17:14:32 CEST 2016
+Algorithm used: 4
+Runtime: 1362ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.44355798
+Dropped connections: 324527
+
+Statistics for run: Thu May 26 17:14:33 CEST 2016
+Algorithm used: 4s
+Runtime: 958ms
+Number of steps: 1000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.41306522
+Dropped connections: 318660
+
+Statistics for run: Thu May 26 17:15:03 CEST 2016
+Algorithm used: 1
+Runtime: 1505ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.4640884
+Dropped connections: 1010576
+
+Statistics for run: Thu May 26 17:15:07 CEST 2016
+Algorithm used: 4
+Runtime: 3841ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.44693497
+Dropped connections: 955821
+
+Statistics for run: Thu May 26 17:15:10 CEST 2016
+Algorithm used: 4s
+Runtime: 3098ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.44193542
+Dropped connections: 985303
+
+Statistics for run: Thu May 26 17:15:50 CEST 2016
+Algorithm used: 1
+Runtime: 4583ms
+Number of steps: 3000
+World size: 1000
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.029392947
+Dropped connections: 568037
+
+Statistics for run: Thu May 26 17:16:00 CEST 2016
+Algorithm used: 4
+Runtime: 8479ms
+Number of steps: 3000
+World size: 1000
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.028627682
+Dropped connections: 644808
+
+Statistics for run: Thu May 26 17:16:08 CEST 2016
+Algorithm used: 4s
+Runtime: 7646ms
+Number of steps: 3000
+World size: 1000
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.028536338
+Dropped connections: 724526
+
+Statistics for run: Thu May 26 17:16:33 CEST 2016
+Algorithm used: 1
+Runtime: 648ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6945955
+Dropped connections: 294685
+
+Statistics for run: Thu May 26 17:16:36 CEST 2016
+Algorithm used: 4
+Runtime: 2922ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.70019555
+Dropped connections: 298190
+
+Statistics for run: Thu May 26 17:16:38 CEST 2016
+Algorithm used: 4s
+Runtime: 1784ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 10
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.66786224
+Dropped connections: 343930
+
+Statistics for run: Thu May 26 17:30:57 CEST 2016
+Algorithm used: 1
+Runtime: 424ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 5
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.45825148
+Dropped connections: 263160
+
+Statistics for run: Thu May 26 17:31:00 CEST 2016
+Algorithm used: 4
+Runtime: 3045ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 5
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.46748853
+Dropped connections: 264594
+
+Statistics for run: Thu May 26 17:31:02 CEST 2016
+Algorithm used: 4s
+Runtime: 1525ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 5
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.4391374
+Dropped connections: 269334
+
+Statistics for run: Thu May 26 17:33:01 CEST 2016
+Algorithm used: 1
+Runtime: 470ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 6
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.53392935
+Dropped connections: 315495
+
+Statistics for run: Thu May 26 17:33:04 CEST 2016
+Algorithm used: 4
+Runtime: 2880ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 6
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.5499349
+Dropped connections: 317917
+
+Statistics for run: Thu May 26 17:33:05 CEST 2016
+Algorithm used: 4s
+Runtime: 1611ms
+Number of steps: 3000
+World size: 100
+Number of balloons: 100
+Range: 6
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.4967514
+Dropped connections: 326691
+
+Statistics for run: Thu May 26 17:56:10 CEST 2016
+Algorithm used: 1
+Runtime: 7285ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.70423454
+Dropped connections: 818921
+
+Statistics for run: Thu May 26 17:56:22 CEST 2016
+Algorithm used: 4
+Runtime: 12058ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.692488
+Dropped connections: 842190
+
+Statistics for run: Thu May 26 17:56:32 CEST 2016
+Algorithm used: 4s
+Runtime: 9710ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6905708
+Dropped connections: 873654
+
+Statistics for run: Thu May 26 17:57:26 CEST 2016
+Algorithm used: 1
+Runtime: 7166ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.70029026
+Dropped connections: 865119
+
+Statistics for run: Thu May 26 17:57:33 CEST 2016
+Algorithm used: 4
+Runtime: 6760ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.6968999
+Dropped connections: 860001
+
+Statistics for run: Thu May 26 17:57:40 CEST 2016
+Algorithm used: 4s
+Runtime: 6885ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.70735544
+Dropped connections: 847037
+
+Statistics for run: Thu May 26 17:58:29 CEST 2016
+Algorithm used: 1
+Runtime: 7536ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.6834431
+Dropped connections: 751394
+
+Statistics for run: Thu May 26 17:58:36 CEST 2016
+Algorithm used: 4
+Runtime: 7087ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.6885301
+Dropped connections: 740231
+
+Statistics for run: Thu May 26 17:58:44 CEST 2016
+Algorithm used: 4s
+Runtime: 7256ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 1
+Number of wind layers: 4
+Coverage over simulation: 0.6841779
+Dropped connections: 806447
+
+Statistics for run: Thu May 26 17:59:19 CEST 2016
+Algorithm used: 1
+Runtime: 7049ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.69685155
+Dropped connections: 704366
+
+Statistics for run: Thu May 26 17:59:31 CEST 2016
+Algorithm used: 4
+Runtime: 11508ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6783634
+Dropped connections: 867661
+
+Statistics for run: Thu May 26 17:59:40 CEST 2016
+Algorithm used: 4s
+Runtime: 9433ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6637095
+Dropped connections: 944874
+
+Statistics for run: Thu May 26 18:02:18 CEST 2016
+Algorithm used: 1
+Runtime: 283ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 2
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 5.4152904E-4
+Dropped connections: 885
+
+Statistics for run: Thu May 26 18:02:19 CEST 2016
+Algorithm used: 4
+Runtime: 306ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 2
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 5.3337036E-4
+Dropped connections: 419
+
+Statistics for run: Thu May 26 18:02:19 CEST 2016
+Algorithm used: 4s
+Runtime: 269ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 2
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 5.324457E-4
+Dropped connections: 455
+
+Statistics for run: Thu May 26 18:02:46 CEST 2016
+Algorithm used: 1
+Runtime: 7412ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 199
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.9656374
+Dropped connections: 1261369
+
+Statistics for run: Thu May 26 18:02:53 CEST 2016
+Algorithm used: 4
+Runtime: 6912ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 199
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.9715975
+Dropped connections: 1062722
+
+Statistics for run: Thu May 26 18:03:00 CEST 2016
+Algorithm used: 4s
+Runtime: 7086ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 2
+Range: 199
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.9731091
+Dropped connections: 1194352
+
+Statistics for run: Thu May 26 18:12:12 CEST 2016
+Algorithm used: 1
+Runtime: 7044ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.68065166
+Dropped connections: 786221
+
+Statistics for run: Thu May 26 18:12:24 CEST 2016
+Algorithm used: 4
+Runtime: 11523ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6861759
+Dropped connections: 780815
+
+Statistics for run: Thu May 26 18:12:33 CEST 2016
+Algorithm used: 4s
+Runtime: 9713ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6728075
+Dropped connections: 792803
+
+Statistics for run: Thu May 26 18:20:18 CEST 2016
+Algorithm used: 1
+Runtime: 6866ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.7028651
+Dropped connections: 927725
+
+Statistics for run: Thu May 26 18:20:30 CEST 2016
+Algorithm used: 4
+Runtime: 11997ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.7023002
+Dropped connections: 859435
+
+Statistics for run: Thu May 26 18:20:39 CEST 2016
+Algorithm used: 4s
+Runtime: 9401ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6691168
+Dropped connections: 913182
+
+Statistics for run: Thu May 26 18:24:36 CEST 2016
+Algorithm used: 1
+Runtime: 7071ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.7024964
+Dropped connections: 929984
+
+Statistics for run: Thu May 26 18:24:47 CEST 2016
+Algorithm used: 4
+Runtime: 11652ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.65439177
+Dropped connections: 954585
+
+Statistics for run: Thu May 26 18:24:57 CEST 2016
+Algorithm used: 4s
+Runtime: 9446ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.6254211
+Dropped connections: 939084
+
+Statistics for run: Thu May 26 18:25:52 CEST 2016
+Algorithm used: 4
+Runtime: 12159ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.69213283
+Dropped connections: 1155095
+
+Statistics for run: Thu May 26 18:26:01 CEST 2016
+Algorithm used: 4s
+Runtime: 9378ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.5608106
+Dropped connections: 1026407
+
+Statistics for run: Thu May 26 18:26:23 CEST 2016
+Algorithm used: 4
+Runtime: 12240ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.67427003
+Dropped connections: 859165
+
+Statistics for run: Thu May 26 18:26:32 CEST 2016
+Algorithm used: 4s
+Runtime: 9450ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.66860414
+Dropped connections: 1131474
+
+Statistics for run: Thu May 26 18:27:45 CEST 2016
+Algorithm used: 4
+Runtime: 12610ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.69450974
+Dropped connections: 826054
+
+Statistics for run: Thu May 26 18:27:54 CEST 2016
+Algorithm used: 4s
+Runtime: 9427ms
+Number of steps: 3000
+World size: 200
+Number of balloons: 200
+Range: 19
+Communication radius: 10
+Number of wind layers: 4
+Coverage over simulation: 0.67905945
+Dropped connections: 902472
+

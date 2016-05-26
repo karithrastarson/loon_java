@@ -30,8 +30,9 @@ public class Canvas extends JPanel implements Runnable{
 	
     public Canvas() {
 		world = new World();
+		RANGE = world.RANGE;
 		try {
-			world.init('s');
+			world.init("4s");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -61,27 +62,22 @@ public class Canvas extends JPanel implements Runnable{
         
         super.removeAll();
         try{
-//            for(int x = 0; x < world.WORLD_SIZE; x++){
-//            	for(int y = 0; y < world.WORLD_SIZE; y++){
-//            	if(coverage[x][y]){
-//                    g.setColor(Color.green);
-//                    g.fillOval(x-DIAMETER,y-DIAMETER,DIAMETER,DIAMETER);
-//            	}
-//            	else{
-//                    g.setColor(Color.black);
-//                    g.fillOval(x-DIAMETER,y-DIAMETER,DIAMETER,DIAMETER);
-//            	}
-//            }}
+
         for(Balloon b : balloons){
 //            g.setColor(Color.blue);
 //            g.fillOval((b.getX()-RANGE),(b.getY()-RANGE),(b.getX()+RANGE),(b.getY()+RANGE));
 //            g.setColor(color);
 //            g.fillOval((b.getX()-RANGE),(b.getY()-RANGE),(b.getX()+RANGE),(b.getY()+RANGE));
 //            
+//            g.setColor(color);
+//            g.fillOval(b.getX()-DIAMETER,b.getY()-DIAMETER,DIAMETER,DIAMETER);
+//            g.setColor(Color.blue);
+//            g.drawOval(b.getX()-(DIAMETER-RANGE), b.getY()-(RANGE-DIAMETER), DIAMETER+RANGE, DIAMETER+RANGE);
+        	
             g.setColor(color);
-            g.fillOval(b.getX()-DIAMETER,b.getY()-DIAMETER,DIAMETER,DIAMETER);
+            g.fillOval(b.getX(),b.getY(),DIAMETER,DIAMETER);
             g.setColor(Color.blue);
-            g.drawOval(b.getX()+DIAMETER-RANGE, b.getY()-RANGE+DIAMETER, DIAMETER+RANGE, DIAMETER+RANGE);
+            g.drawOval(b.getX()-(RANGE/2), b.getY()-(RANGE/2), DIAMETER+RANGE, DIAMETER+RANGE);
 
         }
 
