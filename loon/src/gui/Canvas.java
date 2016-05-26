@@ -26,15 +26,18 @@ public class Canvas extends JPanel implements Runnable{
 	World world;
 	
 	ArrayList<Balloon> balloons;
+	boolean[][] coverage;
+	
     public Canvas() {
 		world = new World();
 		try {
-			world.init();
+			world.init('s');
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	balloons = new ArrayList<>();
+    	coverage = new boolean[world.WORLD_SIZE][world.WORLD_SIZE];
     	color = Color.RED;
     	setBackground(Color.BLACK);
     	setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -55,7 +58,20 @@ public class Canvas extends JPanel implements Runnable{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);   
+        
+        super.removeAll();
         try{
+//            for(int x = 0; x < world.WORLD_SIZE; x++){
+//            	for(int y = 0; y < world.WORLD_SIZE; y++){
+//            	if(coverage[x][y]){
+//                    g.setColor(Color.green);
+//                    g.fillOval(x-DIAMETER,y-DIAMETER,DIAMETER,DIAMETER);
+//            	}
+//            	else{
+//                    g.setColor(Color.black);
+//                    g.fillOval(x-DIAMETER,y-DIAMETER,DIAMETER,DIAMETER);
+//            	}
+//            }}
         for(Balloon b : balloons){
 //            g.setColor(Color.blue);
 //            g.fillOval((b.getX()-RANGE),(b.getY()-RANGE),(b.getX()+RANGE),(b.getY()+RANGE));
@@ -68,6 +84,7 @@ public class Canvas extends JPanel implements Runnable{
             g.drawOval(b.getX()+DIAMETER-RANGE, b.getY()-RANGE+DIAMETER, DIAMETER+RANGE, DIAMETER+RANGE);
 
         }
+
         }catch(Exception e){
         	System.out.println("Error with balloons in canvas. Size: " + balloons.size());
         }
@@ -75,16 +92,17 @@ public class Canvas extends JPanel implements Runnable{
     }
 
     
-    public void updateGraphics(ArrayList<Balloon> b) {
+    public void updateGraphics(ArrayList<Balloon> b, boolean[][] cov) {
     	balloons = b;
- 
+		coverage = cov;
         repaint();
     }
 
     public void step(){
 		try {
-			world.step2();
-			updateGraphics(world.getBalloons());
+			world.step();
+			
+			updateGraphics(world.getBalloons(),world.getCoverage());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,9 +115,9 @@ public class Canvas extends JPanel implements Runnable{
 		
     	while(true){
     	try {
-			world.step2();
+			world.step();
 			
-			updateGraphics(world.getBalloons());
+			updateGraphics(world.getBalloons(), world.getCoverage());
 			
 			Thread.sleep(delay);
 		} catch (IOException e) {
