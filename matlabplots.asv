@@ -40,20 +40,19 @@ print('report/graphics/windlayers','-dpdf')
 print -painters -dpdf -r600 test.pdf
 
 
-% sim_cov_alg1 = importdata('loon/outputData/simulation_coverage_alg1.txt');
-% sim_cov_alg2 = importdata('loon/outputData/simulation_coverage_alg2.txt');
-% sim_cov_alg3 = importdata('loon/outputData/simulation_coverage_alg3.txt');
-% sim_cov_alg3s = importdata('loon/outputData/simulation_coverage_alg3s.txt');
-% sim_cov_alg4 = importdata('loon/outputData/simulation_coverage_alg4.txt');
-% sim_cov_alg4s = importdata('loon/outputData/simulation_coverage_alg4s.txt');
-% 
-% 
-% sim_cov_alg4_6 = importdata('loon/outputData/archive/simulation_coverage_alg4_6.txt');
-% sim_cov_alg4_2 = importdata('loon/outputData/archive/simulation_coverage_alg4_2.txt');
-% sim_cov_alg4_3 = importdata('loon/outputData/archive/simulation_coverage_alg4_3.txt');
-% sim_cov_alg4_4 = importdata('loon/outputData/archive/simulation_coverage_alg4_4.txt');
+sim_cov_alg1 = importdata('loon/outputData/simulation_coverage_alg1.txt');
+sim_cov_alg2 = importdata('loon/outputData/simulation_coverage_alg2.txt');
+sim_cov_alg3 = importdata('loon/outputData/simulation_coverage_alg3.txt');
+sim_cov_alg3s = importdata('loon/outputData/simulation_coverage_alg3s.txt');
+sim_cov_alg4 = importdata('loon/outputData/simulation_coverage_alg4.txt');
+sim_cov_alg4s = importdata('loon/outputData/simulation_coverage_alg4s.txt');
+
+
+sim_cov_alg4_6 = importdata('loon/outputData/archive/simulation_coverage_alg4_6.txt');
+sim_cov_alg4_2 = importdata('loon/outputData/archive/simulation_coverage_alg4_2.txt');
+sim_cov_alg4_3 = importdata('loon/outputData/archive/simulation_coverage_alg4_3.txt');
+sim_cov_alg4_4 = importdata('loon/outputData/archive/simulation_coverage_alg4_4.txt');
 sim_cov_alg4_10 = importdata('loon/outputData/archive/simulation_coverage_alg4_10.txt');
-sim_cov_alg4_10_easy = importdata('loon/outputData/archive/simulation_coverage_alg4_10_easy.txt');
 
 % % 
 % % 
@@ -63,8 +62,8 @@ figure
 
 
 subplot(1,2,1)
-plot(sim_cov_alg4_10(:,1), sim_cov_alg4_10(:,2))
-title('10x - Algorithm 4 ')
+plot(sim_cov_alg4_2(:,1), sim_cov_alg4_2(:,2))
+title('2x')
 xlabel('t')
 ylabel('Coverage')
 xlim([0 steps])
@@ -96,13 +95,13 @@ ylim([0 1])
  
  
  subplot(1,2,2)
-plot(sim_cov_alg4_10_easy(:,1), sim_cov_alg4_10_easy(:,2))
-title('10x - Algorithm 4 - uniform wind')
+plot(sim_cov_alg4_10(:,1), sim_cov_alg4_10(:,2))
+title('10x - algorithm 4w')
 xlabel('t')
  ylabel('Coverage')
  xlim([0 steps])
  ylim([0 1])
-  % print('report/graphics/alg4_lifetime200_scaling','-dpdf')
+   print('report/graphics/alg4_lifetime200_scaling','-dpdf')
 %  
 %  
 %  subplot(1,2,1)

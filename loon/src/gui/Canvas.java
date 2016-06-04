@@ -32,7 +32,7 @@ public class Canvas extends JPanel implements Runnable{
 		world = new World();
 		RANGE = world.RANGE;
 		try {
-			world.init("4s");
+			world.init("1");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
