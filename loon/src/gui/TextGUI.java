@@ -40,7 +40,7 @@ public class TextGUI {
 
 		/* UNCOMMENT TO RUN SIMULATION WITH ALGORITHM 4 */
 		World world4 = new World();
-		world4.init("3");
+		world4.init("4");
 		world4.simulate();
 
 
